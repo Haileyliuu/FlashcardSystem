@@ -1,0 +1,73 @@
+
+.root {
+    -fx-background-color: #1f1f1f;
+}
+
+.label {
+    -fx-text-fill: #e6e6e6;
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.label {
+    -fx-font-size: 26px;
+}
+
+.button {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+
+    -fx-padding: 8 16 8 16;
+}
+
+.button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.button {
+    -fx-font-weight: bold;
+}
+
+.button:focused {
+    -fx-background-color: #ff8c32;
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: transparent;
+
+    -fx-padding: 8;
+}
+
+.text-area {
+    -fx-control-inner-background: #2a2a2a;
+    -fx-text-fill: white;
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: transparent;
+}
+
+.text-area .content {
+    -fx-background-color: #2a2a2a;
+}
+
+.text-field .text,
+.text-area .text {
+    -fx-fill: white;
+}
+
+.label:disabled,
+.label .text {
+    -fx-fill: #9a9a9a;
+}

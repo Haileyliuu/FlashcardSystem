@@ -31,10 +31,12 @@ public class SwitchScene {
         });
 
         VBox main_menu = new VBox();
+        main_menu.setAlignment(Pos.CENTER);
+        main_menu.setSpacing(40);
         main_menu.getChildren().add(create_deck_text);
         main_menu.getChildren().add(add_deck_btn);
         scene = new Scene(main_menu, 600, 600);
-        stage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());        stage.setScene(scene);
         stage.show();
     }
 
@@ -54,9 +56,8 @@ public class SwitchScene {
         deck_description_area.setMaxHeight(100);
 
         HBox cancel_save_box = new HBox();
-        cancel_save_box.setTranslateX(150);
-        cancel_save_box.setTranslateY(200);
-        cancel_save_box.setSpacing(200);
+        cancel_save_box.setAlignment(Pos.CENTER);
+        cancel_save_box.setSpacing(40);
         Button cancel_button = new Button("Cancel");
         Button save_button = new Button("Save");
         cancel_save_box.getChildren().add(cancel_button);
@@ -77,6 +78,8 @@ public class SwitchScene {
 
 
         VBox define_deck_menu = new VBox();
+        define_deck_menu.setAlignment(Pos.TOP_CENTER);
+        define_deck_menu.setSpacing(20);
         define_deck_menu.getChildren().add(define_deck_label);
         define_deck_menu.getChildren().add(required_name_label);
         define_deck_menu.getChildren().add(deck_name_field);
@@ -84,6 +87,7 @@ public class SwitchScene {
         define_deck_menu.getChildren().add(deck_description_area);
         define_deck_menu.getChildren().add(cancel_save_box);
         scene = new Scene(define_deck_menu, 600, 600);
+        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
