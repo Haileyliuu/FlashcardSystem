@@ -37,6 +37,7 @@ public class SwitchScene {
         main_menu.getChildren().add(add_deck_btn);
         scene = new Scene(main_menu, 600, 600);
         scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());        stage.setScene(scene);
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -48,8 +49,11 @@ public class SwitchScene {
         required_name_label.setFont(Font.font("",20));
         TextField deck_name_field = new TextField();
         deck_name_field.setMaxWidth(300);
+        deck_name_field.textProperty().addListener((obs, oldText, newText) -> {
+            deck_name_field.getStyleClass().remove("error");
+        });
 
-        Label deck_description_label = new Label("Deck description (optional)");
+        Label deck_description_label = new Label("Deck description (optional):");
         deck_description_label.setTextFill(Color.GREY);
         TextArea deck_description_area = new TextArea();
         deck_description_area.setMaxWidth(400);
@@ -72,7 +76,13 @@ public class SwitchScene {
         save_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                switchScene1(stage);
+                if(deck_name_field.getText().isEmpty()){
+                    deck_name_field.setPromptText("Deck name is required");
+                    deck_name_field.getStyleClass().add("error");
+                }
+                else {
+                    switchScene1(stage);
+                }
             }
         });
 
