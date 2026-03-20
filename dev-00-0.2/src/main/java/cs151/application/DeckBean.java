@@ -1,4 +1,4 @@
-package cs151.application.data;
+package cs151.application;
 
 public class DeckBean {
     private String title;

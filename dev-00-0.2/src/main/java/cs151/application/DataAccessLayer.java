@@ -1,4 +1,4 @@
-package cs151.application.data;
+package cs151.application;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,29 +10,25 @@ import java.util.List;
 
 
 public class DataAccessLayer {
-    private static final String DECK_CSV = "data/deck.csv";
-    private List<DeckBean> decks;
+    private static final String DECK_CSV = "dev-00-0.2\\src\\main\\java\\cs151\\application\\data\\Deck.csv";
+    private static List<DeckBean> decks = new ArrayList<>();
 
-    public DataAccessLayer()
-    {
-        decks = new ArrayList<>();
-    }
-
+    public DataAccessLayer() {}
 
     // get the ArrayList of DeckBeans
-    public List<DeckBean> getDecks()
+    public static List<DeckBean> getDecks()
     {
         return decks;
     }
 
     // add to ArrayList
-    public void insertDeck(DeckBean d)
+    public static void insertDeck(DeckBean d)
     {
         decks.add(d);
     }
 
     // delete from ArrayList
-    public void deleteDeck(String title)
+    public static void deleteDeck(String title)
     {
         for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i).getTitle().equals(title)) {
@@ -43,7 +39,7 @@ public class DataAccessLayer {
     }
 
     // save ArrayList to deck.csv
-    public void writeDeck()
+    public static void writeDeck()
     {
         File folder = new File("data");
         if (!folder.exists()) {
@@ -73,7 +69,7 @@ public class DataAccessLayer {
     }
 
     // read from deck.csv and put into ArrayList
-    public void readDeck()
+    public static void readDeck()
     {
         decks.clear();
 

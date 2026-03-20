@@ -4,13 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -19,6 +18,8 @@ public class SwitchScene {
     private Scene scene;
 
     public void switchScene1(Stage stage) {
+        DataAccessLayer.readDeck();
+        int deck_amount = DataAccessLayer.getDecks().size();
         Label create_deck_text = new Label("Create");
         create_deck_text.setFont(Font.font("", 50));
         Button add_deck_btn = new Button("+");
@@ -30,13 +31,50 @@ public class SwitchScene {
             }
         });
 
-        VBox main_menu = new VBox();
-        main_menu.setAlignment(Pos.CENTER);
-        main_menu.setSpacing(40);
-        main_menu.getChildren().add(create_deck_text);
-        main_menu.getChildren().add(add_deck_btn);
-        scene = new Scene(main_menu, 600, 600);
-        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());        stage.setScene(scene);
+        VBox create = new VBox();
+        create.setTranslateX(10);
+        create.setTranslateY(10);
+        create.setSpacing(40);
+        create.getChildren().add(create_deck_text);
+        create.getChildren().add(add_deck_btn);
+
+        Line line = new Line();
+        line.setStartY(10);
+        line.setEndY(500);
+        line.setStroke(Color.WHITE);
+
+        //***************List number of decks and all decks created*************//
+        VBox deck_listing = new VBox();
+        deck_listing.setSpacing(20);
+        Label deck_number_text = new Label(deck_amount + " Decks");
+        deck_number_text.setFont(Font.font("", 50));
+        deck_number_text.setTranslateX(-10);
+        deck_number_text.setTranslateY(10);
+
+        TableView<DeckBean> table = new TableView<>();
+        table.setPrefWidth(700);
+        TableColumn<DeckBean, String> title_column = new TableColumn<>("Title");
+        title_column.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<DeckBean, String> description_column = new TableColumn<>("Description");
+        description_column.setCellValueFactory(new PropertyValueFactory<>("description"));
+        title_column.setPrefWidth(150);
+        description_column.setPrefWidth(550);
+        table.getColumns().add(title_column);
+        table.getColumns().add(description_column);
+        for (int i = 0; i < deck_amount; i++) {
+            table.getItems().add(DataAccessLayer.getDecks().get(i));
+        }
+        deck_listing.getChildren().add(deck_number_text);
+        deck_listing.getChildren().add(table);
+        //********************************************************************//
+
+        HBox main_menu = new HBox();
+        main_menu.setSpacing(20);
+        main_menu.getChildren().add(create);
+        main_menu.getChildren().add(line);
+        main_menu.getChildren().add(deck_listing);
+        scene = new Scene(main_menu, 900, 600);
+        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -81,7 +119,25 @@ public class SwitchScene {
                     deck_name_field.getStyleClass().add("error");
                 }
                 else {
-                    switchScene1(stage);
+                    String trimmed_name = deck_name_field.getText().replaceAll(" ", "");
+                    boolean found = false;
+                    for (int i = 0; i < DataAccessLayer.getDecks().size(); i++) {
+                        String check = DataAccessLayer.getDecks().get(i).getTitle().replaceAll(" ", "");
+                        if (trimmed_name.equals(check)) {
+                            deck_name_field.clear();
+                            deck_name_field.setPromptText("Title has already been used");
+                            deck_name_field.getStyleClass().add("error");
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        DeckBean new_deck = new DeckBean();
+                        new_deck.setTitle(deck_name_field.getText());
+                        new_deck.setDescription(deck_description_area.getText());
+                        DataAccessLayer.insertDeck(new_deck);
+                        DataAccessLayer.writeDeck();
+                        switchScene1(stage);
+                    }
                 }
             }
         });
@@ -96,7 +152,7 @@ public class SwitchScene {
         define_deck_menu.getChildren().add(deck_description_label);
         define_deck_menu.getChildren().add(deck_description_area);
         define_deck_menu.getChildren().add(cancel_save_box);
-        scene = new Scene(define_deck_menu, 600, 600);
+        scene = new Scene(define_deck_menu, 900, 600);
         scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
