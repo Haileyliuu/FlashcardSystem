@@ -21,9 +21,9 @@ public class SwitchScene {
         DataAccessLayer.readDeck();
         int deck_amount = DataAccessLayer.getDecks().size();
         Label create_deck_text = new Label("Create");
-        create_deck_text.setFont(Font.font("", 50));
+        create_deck_text.getStyleClass().add("header-text");
         Button add_deck_btn = new Button("+");
-        add_deck_btn.setFont(Font.font("",30));
+        add_deck_btn.getStyleClass().add("add-card");
         add_deck_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -68,12 +68,25 @@ public class SwitchScene {
         deck_listing.getChildren().add(table);
         //********************************************************************//
 
+        TextField search = new TextField();
+        search.setPromptText("Search...");
+        search.setMaxWidth(400);
+
+        HBox topBar = new HBox();
+        topBar.setSpacing(20);
+        topBar.setAlignment(Pos.CENTER_LEFT);
+        topBar.getChildren().add(search);
+
         HBox main_menu = new HBox();
         main_menu.setSpacing(20);
         main_menu.getChildren().add(create);
         main_menu.getChildren().add(line);
         main_menu.getChildren().add(deck_listing);
-        scene = new Scene(main_menu, 900, 600);
+        VBox root = new VBox(20);
+        root.setStyle("-fx-padding: 20;");
+        root.getChildren().addAll(topBar, main_menu);
+
+        scene = new Scene(root, 900, 600);
         scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
