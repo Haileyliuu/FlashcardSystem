@@ -2,6 +2,11 @@
 
 # Who did what:
 
+# Version: 0.4
+1. Quoc Nguyen Lac: Implemented data storing and data listing
+2. Alissa Dao: Styled page layout
+3. Hailey Liu: Developed DeckBean and DAL class, styled table
+
 # Version: 0.2
 1. Quoc Nguyen Lac: Developed home page and define deck page
 2. Alissa Dao: Styled pages

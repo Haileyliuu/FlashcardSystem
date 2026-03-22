@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public class DataAccessLayer {
-    private static final String DECK_CSV = "dev-00-0.2\\src\\main\\java\\cs151\\application\\data\\Deck.csv";
+    private static final String DECK_CSV = "data/Deck.csv";
     private static List<DeckBean> decks = new ArrayList<>();
 
     public DataAccessLayer() {}

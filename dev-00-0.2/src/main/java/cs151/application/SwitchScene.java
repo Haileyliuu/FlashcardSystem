@@ -127,12 +127,13 @@ public class SwitchScene {
         save_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(deck_name_field.getText().isEmpty()){
+                String trimmed_name = deck_name_field.getText().replaceAll(" ", "");
+                if(trimmed_name.isEmpty()){
+                    deck_name_field.clear();
                     deck_name_field.setPromptText("Deck name is required");
                     deck_name_field.getStyleClass().add("error");
                 }
                 else {
-                    String trimmed_name = deck_name_field.getText().replaceAll(" ", "");
                     boolean found = false;
                     for (int i = 0; i < DataAccessLayer.getDecks().size(); i++) {
                         String check = DataAccessLayer.getDecks().get(i).getTitle().replaceAll(" ", "");

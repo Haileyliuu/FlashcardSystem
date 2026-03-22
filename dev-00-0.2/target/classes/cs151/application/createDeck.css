@@ -47,12 +47,22 @@
 }
 
 /* Table styling */
-.table-view {
+.table-view, .table-cell, .table-row-cell,
+.table-view .virtual-flow,
+.table-view .clipped-container,
+.table-view .sheet {
     -fx-background-color: transparent;
+    -fx-table-cell-border-color: #555555;
 }
 
-.table-view .column-header-background {
+.table-view .column-header-background,
+.table-view .column-header,
+.table-view .scroll-bar{
     -fx-background-color: #2a2a2a;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #555555;
 }
 
 .table-view .column-header,
@@ -62,11 +72,22 @@
 
 /* Input fields */
 .text-field, .text-area {
+    -fx-control-inner-background: #2a2a2a;
+    -fx-prompt-text-fill: #888888;
     -fx-background-color: #2a2a2a;
     -fx-text-fill: white;
-    -fx-background-radius: 20; /* changed from 10 → 20 */
+
+     -fx-background-radius: 20; /* changed from 10 → 20 */
+     -fx-border-radius: 20;
+
     -fx-padding: 10;           /* ADD THIS */
 }
+
+.text-area .content {
+    -fx-control-inner-background: #2a2a2a;
+    -fx-background-radius: 0;
+}
+
 /* Error styling */
 .error {
     -fx-border-color: #ff4d4d;
