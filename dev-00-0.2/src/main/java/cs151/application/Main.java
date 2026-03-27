@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         stage.setTitle("Main Menu");
 
-        SwitchScene main_menu = new SwitchScene();
+        SceneController main_menu = new SceneController();
         main_menu.switchScene1(stage);
     }
 
