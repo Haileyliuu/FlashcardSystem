@@ -66,17 +66,14 @@ public class Scene1Controller {
                     setStyle("");
                     return;
                 }
-
-                // Show the cell's text
                 setText(item);
+                setUnderline(true);
 
                 // Make the cell clickable
                 setOnMouseClicked(e -> {
                     DeckBean deck = getTableView().getItems().get(getIndex());
                     SceneController.switchScene4(stage, deck);
                 });
-
-                // Make it look clickable
                 setStyle("-fx-cursor: hand;");
             }
         });

@@ -2,6 +2,11 @@
 
 # Who did what:
 
+# Version: 0.5
+1. Quoc Nguyen Lac: Implemented define flashcard and data storing
+2. Alissa Dao: Styled pages
+3. Hailey Liu: Developed FlashcardBean and DAL class
+
 # Version: 0.4
 1. Quoc Nguyen Lac: Implemented data storing and data listing
 2. Alissa Dao: Styled page layout
