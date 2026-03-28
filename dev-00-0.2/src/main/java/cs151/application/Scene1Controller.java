@@ -89,7 +89,7 @@ public class Scene1Controller {
             private final Button edit_button = new Button("Edit");
             {
                 edit_button.setOnAction(event -> {
-                    DeckBean deck = getTableView().getItems().get(getIndex());
+                    DeckBean deck = getTableView().getItems().get(getTableRow().getIndex());
                     SceneController.switchScene3(stage, deck);
                 });
             }

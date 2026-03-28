@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.StackPane;
+import javafx.geometry.Pos;
 
 public class Scene3Controller {
 
@@ -33,11 +36,15 @@ public class Scene3Controller {
         define_flashcards.setSpacing(10);
 
         Label define_flashcards_label = new Label("Define flashcards of deck: " + deck.getTitle());
+        define_flashcards_label.setAlignment(Pos.CENTER);
+        define_flashcards_label.setMaxWidth(Double.MAX_VALUE);
+        define_flashcards_label.getStyleClass().add("header-text");
         define_flashcards_label.setFont(Font.font("", 30));
         define_flashcards_label.setTranslateX(10);
         define_flashcards_label.setTranslateY(10);
 
-        list_flashcards.setSpacing(10);
+        list_flashcards.setSpacing(25);
+        list_flashcards.setAlignment(Pos.CENTER);
 
         CreateFlashcard first = new CreateFlashcard();
         flashcards.add(first);
@@ -45,8 +52,9 @@ public class Scene3Controller {
         attachHandlers(first);
 
         HBox cancel_save = new HBox();
-        cancel_save.setSpacing(300);
-        cancel_save.setTranslateX(200);
+        cancel_save.setSpacing(20);
+        cancel_save.setAlignment(Pos.CENTER_RIGHT);
+        cancel_save.setMaxWidth(700);
         Button cancel_button = new Button("Cancel");
         cancel_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -108,7 +116,35 @@ public class Scene3Controller {
         define_flashcards.getChildren().add(cancel_save);
         scrollPane.setContent(define_flashcards);
         scrollPane.setPadding(new Insets(0,0,10,10));
-        Scene scene = new Scene(scrollPane, 900, 600);
+
+        VBox sidebar = new VBox(20);
+        sidebar.setPrefWidth(200);
+        sidebar.setPadding(new Insets(20));
+        sidebar.setStyle("-fx-background-color: #121212;");
+
+        Label home = new Label("Home");
+        Label library = new Label("Library");
+        Label folders = new Label("Folders");
+
+        sidebar.getChildren().addAll(home, library, folders);
+
+        VBox mainContent = new VBox(40);
+        mainContent.setPadding(new Insets(40));
+        mainContent.setAlignment(Pos.TOP_CENTER);
+
+        mainContent.getChildren().addAll(
+                define_flashcards_label,
+                list_flashcards,
+                cancel_save
+        );
+        HBox root = new HBox();
+        root.getChildren().addAll(sidebar, mainContent);
+        Scene scene = new Scene(root, 900, 600);
+
+        scene.getStylesheets().add(
+                Scene3Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+        );
+
         stage.setScene(scene);
         stage.show();
     }
@@ -117,43 +153,76 @@ public class Scene3Controller {
         Button delete_card_button;
         TextField front_field;
         TextArea back_area;
+        TextField front;
+        TextArea back;
 
         CreateFlashcard() {
             add_card_button = new Button("Add");
+            add_card_button.setMinWidth(50);
+
             delete_card_button = new Button("Del");
+            delete_card_button.setMinWidth(50);
+
             front_field = new TextField();
-            front_field.setPrefWidth(300);
+            front_field.setPrefWidth(400);
             back_area = new TextArea();
-            back_area.setPrefHeight(50);
-            back_area.setPrefWidth(300);
+            back_area.setPrefHeight(60);
+            back_area.setPrefWidth(400);
             back_area.setWrapText(true);
+
+            front = new TextField();
+            front.setPromptText("Front");
+            front.setMaxWidth(Double.MAX_VALUE);
+
+            back = new TextArea();
+            back.setPromptText("Back");
+            back.setPrefRowCount(3);
+            back.setMaxWidth(Double.MAX_VALUE);
+            HBox.setHgrow(back, Priority.ALWAYS);
+
+            add_card_button = new Button("Add");
+            delete_card_button = new Button("Delete");
         }
-        HBox create() {
-            HBox info = new HBox();
-            info.setSpacing(10);
+        public VBox create() {
 
-            Line line = new Line();
-            line.setEndY(90);
+            VBox card = new VBox(20);
+            card.getStyleClass().add("card");
+            card.setAlignment(Pos.CENTER);
+            card.setMaxWidth(600);
 
-            VBox study_info = new VBox();
-            study_info.setSpacing(5);
-            HBox front_info = new HBox();
-            Label front_label = new Label("Front: ");
-            front_info.getChildren().add(front_label);
-            front_info.getChildren().add(front_field);
-            study_info.getChildren().add(front_info);
+            // FRONT ROW
+            HBox frontRow = new HBox(15);
+            frontRow.setAlignment(Pos.CENTER_LEFT);
 
-            HBox back_info = new HBox();
-            Label back_label = new Label("Back:  ");
-            back_info.getChildren().add(back_label);
-            back_info.getChildren().add(back_area);
-            study_info.getChildren().add(back_info);
+            Label frontLabel = new Label("Front:");
+            frontLabel.setMinWidth(50);
+            HBox.setHgrow(front, Priority.ALWAYS);
 
-            info.getChildren().add(add_card_button);
-            info.getChildren().add(delete_card_button);
-            info.getChildren().add(line);
-            info.getChildren().add(study_info);
-            return info;
+            frontRow.getChildren().addAll(frontLabel, front);
+
+            // BACK ROW
+            HBox backRow = new HBox(15);
+            backRow.setAlignment(Pos.CENTER_LEFT);
+
+            Label backLabel = new Label("Back:");
+            backLabel.setMinWidth(50);
+            HBox.setHgrow(back, Priority.ALWAYS);
+
+            backRow.getChildren().addAll(backLabel, back);
+
+            // BUTTON ROW
+            HBox buttonRow = new HBox(20);
+            buttonRow.setAlignment(Pos.CENTER);
+
+            buttonRow.getChildren().addAll(add_card_button, delete_card_button);
+
+            // ADD EVERYTHING TO CARD
+            card.getChildren().addAll(frontRow, backRow, buttonRow);
+            card.setAlignment(Pos.CENTER);
+            card.setSpacing(25);
+            card.setPadding(new Insets(30));
+
+            return card;
         }
     }
     private static void attachHandlers(CreateFlashcard flashcard) {
