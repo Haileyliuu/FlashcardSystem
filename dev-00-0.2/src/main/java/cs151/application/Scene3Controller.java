@@ -139,7 +139,9 @@ public class Scene3Controller {
         );
         HBox root = new HBox();
         root.getChildren().addAll(sidebar, mainContent);
-        Scene scene = new Scene(root, 900, 600);
+        ScrollPane scroll = new ScrollPane();
+        scroll.setContent(root);
+        Scene scene = new Scene(scroll, 900, 600);
 
         scene.getStylesheets().add(
                 Scene3Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm()

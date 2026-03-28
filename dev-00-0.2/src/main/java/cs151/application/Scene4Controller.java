@@ -51,6 +51,7 @@ public class Scene4Controller {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setMaxWidth(Double.MAX_VALUE);
         table.setPrefHeight(400);
+        table.setPrefWidth(1000);
         table.getColumns().add(front);
         table.getColumns().add(back);
         table.getColumns().add(status);
