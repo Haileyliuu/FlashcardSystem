@@ -14,11 +14,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Scene1Controller {
-    private static Scene scene;
 
     public Scene1Controller() {}
 
-    public void scene1UI(Stage stage) {
+    public static void scene1UI(Stage stage) {
         int deck_amount = DataAccessLayer.getDecks().size();
         Label create_deck_text = new Label("Create");
         create_deck_text.getStyleClass().add("header-text");
@@ -27,7 +26,7 @@ public class Scene1Controller {
         add_deck_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                SceneController.switchScene3(stage);
+                SceneController.switchScene2(stage);
             }
         });
 
@@ -55,12 +54,62 @@ public class Scene1Controller {
         table.setPrefWidth(700);
         TableColumn<DeckBean, String> title_column = new TableColumn<>("Title");
         title_column.setCellValueFactory(new PropertyValueFactory<>("title"));
+        title_column.setCellFactory(col -> new TableCell<DeckBean, String>() {
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setOnMouseClicked(null);
+                    setStyle("");
+                    return;
+                }
+
+                // Show the cell's text
+                setText(item);
+
+                // Make the cell clickable
+                setOnMouseClicked(e -> {
+                    DeckBean deck = getTableView().getItems().get(getIndex());
+                    SceneController.switchScene4(stage, deck);
+                });
+
+                // Make it look clickable
+                setStyle("-fx-cursor: hand;");
+            }
+        });
+
+
         TableColumn<DeckBean, String> description_column = new TableColumn<>("Description");
         description_column.setCellValueFactory(new PropertyValueFactory<>("description"));
+        TableColumn<DeckBean, Void> edit_deck_column = new TableColumn<>("Action");
+        edit_deck_column.setCellFactory(col -> new TableCell<DeckBean, Void>() {
+            private final Button edit_button = new Button("Edit");
+            {
+                edit_button.setOnAction(event -> {
+                    DeckBean deck = getTableView().getItems().get(getIndex());
+                    SceneController.switchScene3(stage, deck);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                }
+                else {
+                    setGraphic(edit_button);
+                }
+            }
+        });
         title_column.setPrefWidth(150);
-        description_column.setPrefWidth(550);
+        description_column.setPrefWidth(500);
+        edit_deck_column.setPrefWidth(50);
         table.getColumns().add(title_column);
         table.getColumns().add(description_column);
+        table.getColumns().add(edit_deck_column);
         for (int i = 0; i < deck_amount; i++) {
             table.getItems().add(DataAccessLayer.getDecks().get(i));
         }
@@ -86,8 +135,8 @@ public class Scene1Controller {
         root.setStyle("-fx-padding: 20;");
         root.getChildren().addAll(topBar, main_menu);
 
-        scene = new Scene(root, 900, 600);
-        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
+        Scene scene = new Scene(root, 1000, 600);
+        scene.getStylesheets().add(Scene1Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

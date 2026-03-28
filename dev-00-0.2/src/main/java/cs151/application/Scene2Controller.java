@@ -15,11 +15,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Scene2Controller {
-    private static Scene scene;
 
     public Scene2Controller() {}
 
-    public void scene2UI(Stage stage) {
+    public static void scene2UI(Stage stage) {
         Label define_deck_label = new Label("Define Deck");
         define_deck_label.setFont(Font.font("", 50));
 
@@ -36,6 +35,7 @@ public class Scene2Controller {
         TextArea deck_description_area = new TextArea();
         deck_description_area.setMaxWidth(400);
         deck_description_area.setMaxHeight(100);
+        deck_description_area.setWrapText(true);
 
         HBox cancel_save_box = new HBox();
         cancel_save_box.setAlignment(Pos.CENTER);
@@ -93,8 +93,8 @@ public class Scene2Controller {
         define_deck_menu.getChildren().add(deck_description_label);
         define_deck_menu.getChildren().add(deck_description_area);
         define_deck_menu.getChildren().add(cancel_save_box);
-        scene = new Scene(define_deck_menu, 900, 600);
-        scene.getStylesheets().add(getClass().getResource("/cs151/application/createDeck.css").toExternalForm());
+        Scene scene = new Scene(define_deck_menu, 900, 600);
+        scene.getStylesheets().add(Scene2Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

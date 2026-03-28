@@ -11,72 +11,42 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Scene3Controller {
-    private Scene scene;
+
+    private static List<CreateFlashcard> flashcards = new ArrayList<>();
+    private static VBox list_flashcards = new VBox();
 
     public Scene3Controller() {}
 
-    public void scene3UI(Stage stage) {
+    public static void scene3UI(Stage stage, DeckBean deck) {
+        flashcards.clear();
+        list_flashcards.getChildren().clear();
+        DataAccessLayer.readFlashcards();
+        List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
+
         ScrollPane scrollPane = new ScrollPane();
         VBox define_flashcards = new VBox();
         define_flashcards.setSpacing(10);
 
-        Label define_flashcards_label = new Label("Define Flashcards");
+        Label define_flashcards_label = new Label("Define flashcards of deck: " + deck.getTitle());
         define_flashcards_label.setFont(Font.font("", 30));
         define_flashcards_label.setTranslateX(10);
         define_flashcards_label.setTranslateY(10);
 
-        List<CreateFlashcard> flashcards = new ArrayList<>();
-        VBox list_flashcards = new VBox();
         list_flashcards.setSpacing(10);
-        CreateFlashcard default_flashcard = new CreateFlashcard();
-        list_flashcards.getChildren().add(default_flashcard.create());
-        flashcards.add(default_flashcard);
 
-        flashcards.getFirst().add_card_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                CreateFlashcard flashcard = new CreateFlashcard();
-                list_flashcards.getChildren().add(flashcard.create());
-                flashcards.add(flashcard);
-                flashcards.getLast().add_card_button.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        CreateFlashcard flashcard = new CreateFlashcard();
-                        list_flashcards.getChildren().add(flashcard.create());
-                        flashcards.add(flashcard);
-                    }
-                });
-                flashcard.delete_card_button.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        if (flashcards.size() > 1) {
-                            System.out.println(flashcards.size());
-                            flashcards.removeLast();
-                            list_flashcards.getChildren().remove(flashcards.size()-1);
-                        }
-                    }
-                });
-            }
-        });
-        flashcards.getFirst().delete_card_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (flashcards.size() > 1) {
-                    System.out.println(flashcards.size());
-                    flashcards.removeLast();
-                    list_flashcards.getChildren().remove(flashcards.size()-1);
-                }
-            }
-        });
+        CreateFlashcard first = new CreateFlashcard();
+        flashcards.add(first);
+        list_flashcards.getChildren().add(first.create());
+        attachHandlers(first);
 
         HBox cancel_save = new HBox();
         cancel_save.setSpacing(300);
         cancel_save.setTranslateX(200);
-//        cancel_save.setTranslateY(10);
         Button cancel_button = new Button("Cancel");
         cancel_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -85,6 +55,51 @@ public class Scene3Controller {
             }
         });
         Button save_button = new Button("Save");
+        save_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                boolean error = false;
+                for (CreateFlashcard flashcard: flashcards) {
+                    String trimmed_name = flashcard.front_field.getText().replaceAll(" ","");
+                    if(trimmed_name.isEmpty()){
+                        flashcard.front_field.clear();
+                        flashcard.front_field.setPromptText("Front text is required");
+                        flashcard.front_field.getStyleClass().add("error");
+                        error = true;
+                    }
+                    if (flashcard.back_area.getText().isEmpty()) {
+                        flashcard.back_area.clear();
+                        flashcard.back_area.setPromptText("Back text is required");
+                        flashcard.back_area.getStyleClass().add("error");
+                        error = true;
+                    }
+                    for (int i = 0; i < flashcard_list.size(); i++) {
+                        String check = flashcard_list.get(i).getFront().replaceAll(" ","");
+                        if (trimmed_name.equals(check)) {
+                            flashcard.front_field.clear();
+                            flashcard.front_field.setPromptText("Front text has already been used");
+                            flashcard.front_field.getStyleClass().add("error");
+                            error = true;
+                        }
+                    }
+                }
+                if (!error) {
+                    for (CreateFlashcard flashcard : flashcards) {
+                        FlashcardBean new_flashcard = new FlashcardBean();
+                        new_flashcard.setDeckName(deck.getTitle());
+                        new_flashcard.setFront(flashcard.front_field.getText());
+                        new_flashcard.setBack(flashcard.back_area.getText());
+                        new_flashcard.setStatus("New");
+                        new_flashcard.setCreationDate(LocalDate.now().toString());
+                        new_flashcard.setLastReviewed(LocalDate.now().toString());
+                        DataAccessLayer.insertFlashcard(new_flashcard);
+
+                    }
+                    DataAccessLayer.writeFlashcards();
+                    SceneController.switchScene1(stage);
+                }
+            }
+        });
         cancel_save.getChildren().add(cancel_button);
         cancel_save.getChildren().add(save_button);
 
@@ -93,7 +108,7 @@ public class Scene3Controller {
         define_flashcards.getChildren().add(cancel_save);
         scrollPane.setContent(define_flashcards);
         scrollPane.setPadding(new Insets(0,0,10,10));
-        scene = new Scene(scrollPane, 900, 600);
+        Scene scene = new Scene(scrollPane, 900, 600);
         stage.setScene(scene);
         stage.show();
     }
@@ -107,8 +122,11 @@ public class Scene3Controller {
             add_card_button = new Button("Add");
             delete_card_button = new Button("Del");
             front_field = new TextField();
+            front_field.setPrefWidth(300);
             back_area = new TextArea();
-            back_area.setMaxHeight(50);
+            back_area.setPrefHeight(50);
+            back_area.setPrefWidth(300);
+            back_area.setWrapText(true);
         }
         HBox create() {
             HBox info = new HBox();
@@ -126,7 +144,7 @@ public class Scene3Controller {
             study_info.getChildren().add(front_info);
 
             HBox back_info = new HBox();
-            Label back_label = new Label("Back: ");
+            Label back_label = new Label("Back:  ");
             back_info.getChildren().add(back_label);
             back_info.getChildren().add(back_area);
             study_info.getChildren().add(back_info);
@@ -138,5 +156,26 @@ public class Scene3Controller {
             return info;
         }
     }
+    private static void attachHandlers(CreateFlashcard flashcard) {
+        flashcard.add_card_button.setOnAction(e -> {
+            CreateFlashcard newCard = new CreateFlashcard();
+
+            int index = flashcards.indexOf(flashcard) + 1;
+
+            flashcards.add(index, newCard);
+            list_flashcards.getChildren().add(index, newCard.create());
+
+            attachHandlers(newCard);
+        });
+
+        flashcard.delete_card_button.setOnAction(e -> {
+            if (flashcards.size() > 1) {
+                int index = flashcards.indexOf(flashcard);
+                flashcards.remove(index);
+                list_flashcards.getChildren().remove(index);
+            }
+        });
+    }
+
 
 }
