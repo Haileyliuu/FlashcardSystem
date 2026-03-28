@@ -21,7 +21,10 @@ public class Scene4Controller {
         DataAccessLayer.readFlashcards();
         List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
         ScrollPane scroll = new ScrollPane();
+        scroll.setStyle("-fx-background: #1e1e1e; -fx-background-color: #1e1e1e;");
+
         VBox deck_view = new VBox();
+        deck_view.setStyle("-fx-background-color: #1e1e1e;");
         deck_view.setPadding(new Insets(10,0,0,10));
         deck_view.setSpacing(20);
         HBox deck_info = new HBox();
@@ -45,7 +48,8 @@ public class Scene4Controller {
         review.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
         TableColumn<FlashcardBean, String> creation = new TableColumn<>("Created");
         creation.setCellValueFactory(new PropertyValueFactory<>("lastReviewed"));
-        table.setPrefWidth(1000);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setMaxWidth(Double.MAX_VALUE);
         table.setPrefHeight(400);
         table.getColumns().add(front);
         table.getColumns().add(back);
@@ -67,6 +71,7 @@ public class Scene4Controller {
         deck_view.getChildren().add(table);
         scroll.setContent(deck_view);
         Scene scene = new Scene(scroll,1300, 600);
+        scene.getStylesheets().add(Scene4Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

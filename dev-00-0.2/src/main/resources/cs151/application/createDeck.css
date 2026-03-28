@@ -1,6 +1,14 @@
 .root {
     -fx-background-color: #1e1e1e;
 }
+/* ScrollPane background (fix white page issue) */
+.scroll-pane {
+    -fx-background-color: #1e1e1e;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #1e1e1e;
+}
 
 /* Sidebar / left section */
 .vbox {
