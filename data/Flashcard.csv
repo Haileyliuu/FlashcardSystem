@@ -1,18 +1,18 @@
-Dinosaurs|Tyrannosaurus|T-Rex. Most famous dinosaur with little hands and big jaw|New|2026-03-27|2026-03-27
-Dinosaurs|Stegosaurus|Dinosaur with spikes on its back and tail|New|2026-03-27|2026-03-27
-Dinosaurs|Pterodactyl|Flying dinosaur with bird-like head|New|2026-03-27|2026-03-27
-Dinosaurs|Brachiosaurus|One of the biggest dinosaur with a very long neck|New|2026-03-27|2026-03-27
-Dinosaurs|Cartnosaurus|Looks like a T-rex but with two horns on its head|New|2026-03-27|2026-03-27
-Dinosaurs|Ankylosaurus|A short dinosaur with turtle like shell with spikes and a tail that looks like a mace|New|2026-03-27|2026-03-27
-Dinosaurs|Triceratops|A rhino-like dinosaur with 3 three horns on its head|New|2026-03-27|2026-03-27
-Dinosaurs|Velociraptor|A small dinosaur that travels in pack and is very fast|New|2026-03-27|2026-03-27
-CS151|Entity|Something that exists physically or conceptually|New|2026-03-27|2026-03-27
-CS151|Cyberspace|Is an "electonic model" of the "real universe"|New|2026-03-27|2026-03-27
-CS151|Software|Is an electronic model of a "real world procedure" in Cyberspace|New|2026-03-27|2026-03-27
-CS151|Behavior|Is the set of operations that the object can do|New|2026-03-27|2026-03-27
-CS151|Identity|Is the unique name given to the object by the JVM|New|2026-03-27|2026-03-27
-CS146|DFA|Deterministic Finite Automata|New|2026-03-27|2026-03-27
-CS146|NFA|Non-deterministic Finite Automata|New|2026-03-27|2026-03-27
-CS146|PDA|Pushdown deterministic Automata|New|2026-03-27|2026-03-27
-CS146|NPDA|Non-deterministic pushdown automata|New|2026-03-27|2026-03-27
-CS146|TM|Turing Machine|New|2026-03-27|2026-03-27
+1|Dinosaurs|Tyrannosaurus|T-Rex. Most famous dinosaur with little hands and big jaw|New|2026-03-27|2026-03-27
+2|Dinosaurs|Stegosaurus|Dinosaur with spikes on its back and tail|New|2026-03-27|2026-03-27
+3|Dinosaurs|Pterodactyl|Flying dinosaur with bird-like head|New|2026-03-27|2026-03-27
+4|Dinosaurs|Brachiosaurus|One of the biggest dinosaur with a very long neck|New|2026-03-27|2026-03-27
+5|Dinosaurs|Cartnosaurus|Looks like a T-rex but with two horns on its head|New|2026-03-27|2026-03-27
+6|Dinosaurs|Ankylosaurus|A short dinosaur with turtle like shell with spikes and a tail that looks like a mace|New|2026-03-27|2026-03-27
+7|Dinosaurs|Triceratops|A rhino-like dinosaur with 3 three horns on its head|New|2026-03-27|2026-03-27
+8|Dinosaurs|Velociraptor|A small dinosaur that travels in pack and is very fast|New|2026-03-27|2026-03-27
+9|CS151|Entity|Something that exists physically or conceptually|New|2026-03-27|2026-03-27
+10|CS151|Cyberspace|Is an "electonic model" of the "real universe"|New|2026-03-27|2026-03-27
+11|CS151|Software|Is an electronic model of a "real world procedure" in Cyberspace|New|2026-03-27|2026-03-27
+12|CS151|Behavior|Is the set of operations that the object can do|New|2026-03-27|2026-03-27
+13|CS151|Identity|Is the unique name given to the object by the JVM|New|2026-03-27|2026-03-27
+14|CS146|DFA|Deterministic Finite Automata|New|2026-03-27|2026-03-27
+15|CS146|NFA|Non-deterministic Finite Automata|New|2026-03-27|2026-03-27
+16|CS146|PDA|Pushdown deterministic Automata|New|2026-03-27|2026-03-27
+17|CS146|NPDA|Non-deterministic pushdown automata|New|2026-03-27|2026-03-27
+18|CS146|TM|Turing Machine|New|2026-03-27|2026-03-27

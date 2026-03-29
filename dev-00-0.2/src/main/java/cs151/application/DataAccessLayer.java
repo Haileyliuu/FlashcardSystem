@@ -28,14 +28,17 @@ public class DataAccessLayer {
     // add deck to ArrayList
     public static void insertDeck(DeckBean d)
     {
+        if (d.getDeckID() == 0) {
+            d.setDeckID(getNextDeckId());
+        }
         decks.add(d);
     }
 
     // delete deck from ArrayList
-    public static void deleteDeck(String title)
+    public static void deleteDeck(int id)
     {
         for (int i = 0; i < decks.size(); i++) {
-            if (decks.get(i).getTitle().equals(title)) {
+            if (decks.get(i).getDeckID() == id) {
                 decks.remove(i);
                 return;
             }
@@ -67,7 +70,7 @@ public class DataAccessLayer {
                 description = description.replace("\n", "\\n");
                 
 
-                writer.write(title + "|" + description + "\n");
+                writer.write(deck.getDeckID() + "|" + title + "|" + description + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,12 +91,13 @@ public class DataAccessLayer {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|", 2);
+                String[] parts = line.split("\\|", 3);
 
-                if (parts.length == 2) {
+                if (parts.length == 3) {
                     DeckBean deck = new DeckBean();
-                    deck.setTitle(parts[0]);
-                    String desc = parts[1].replace("\\n", "\n");
+                    deck.setDeckID(Integer.parseInt(parts[0]));
+                    deck.setTitle(parts[1]);
+                    String desc = parts[2].replace("\\n", "\n");
                     deck.setDescription(desc);
                     decks.add(deck);
                 }
@@ -101,6 +105,16 @@ public class DataAccessLayer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static int getNextDeckId() {
+        int maxId = 0;
+        for (DeckBean deck : decks) {
+            if (deck.getDeckID() > maxId) {
+                maxId = deck.getDeckID();
+            }
+        }
+        return maxId + 1;
     }
 
 // -------------------------- Flashcard Methods ----------------------------------------
@@ -114,19 +128,21 @@ public class DataAccessLayer {
     // add flashcard to ArrayList
     public static void insertFlashcard(FlashcardBean f) 
     {
+        if (f.getFlashcardID() == 0) {
+            f.setFlashcardID(getNextFlashcardId());
+        }
         flashcards.add(f);
     }
 
     // delete flashcard from ArrayList
-    public static void deleteFlashcard(String deckName, String front) 
+    public static void deleteFlashcard(int id) 
     {
         for (int i = 0; i < flashcards.size(); i++) {
-            FlashcardBean card = flashcards.get(i);
-            if (card.getDeckName().equals(deckName) && card.getFront().equals(front)) {
+            if (flashcards.get(i).getFlashcardID() == id) {
                 flashcards.remove(i);
                 return;
-            }
         }
+    }
     }
 
     // get flashcards in a deck from ArrayList
@@ -155,7 +171,7 @@ public class DataAccessLayer {
                 String creationDate = card.getCreationDate();
                 String lastReviewed = card.getLastReviewed();
 
-                writer.write(deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
+                writer.write(card.getFlashcardID() + "|" + deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,16 +191,17 @@ public class DataAccessLayer {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|", 6);
+                String[] parts = line.split("\\|", 7);
 
-                if (parts.length == 6) {
+                if (parts.length == 7) {
                     FlashcardBean card = new FlashcardBean();
-                    card.setDeckName(parts[0]);
-                    card.setFront(parts[1].replace("\\n", "\n"));
-                    card.setBack(parts[2].replace("\\n", "\n"));
-                    card.setStatus(parts[3]);
-                    card.setCreationDate(parts[4]);
-                    card.setLastReviewed(parts[5]);
+                    card.setFlashcardID(Integer.parseInt(parts[0]));
+                    card.setDeckName(parts[1]);
+                    card.setFront(parts[2].replace("\\n", "\n"));
+                    card.setBack(parts[3].replace("\\n", "\n"));
+                    card.setStatus(parts[4]);
+                    card.setCreationDate(parts[5]);
+                    card.setLastReviewed(parts[6]);
 
                     flashcards.add(card);
                 }
@@ -193,4 +210,15 @@ public class DataAccessLayer {
             e.printStackTrace();
         }
     }
+
+    private static int getNextFlashcardId() {
+        int maxId = 0;
+        for (FlashcardBean card : flashcards) {
+            if (card.getFlashcardID() > maxId) {
+                maxId = card.getFlashcardID();
+            }
+        }
+        return maxId + 1;
+    }
+
 }

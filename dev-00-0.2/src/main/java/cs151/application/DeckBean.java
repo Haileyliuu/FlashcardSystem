@@ -1,12 +1,9 @@
 package cs151.application;
 
-import javafx.scene.control.Button;
-
 public class DeckBean {
     private int deckID;
     private String title;
     private String description;
-    Button button;
 
     public int getDeckID()
     {
@@ -37,8 +34,4 @@ public class DeckBean {
     {
         description = newDesc;
     }
-
-    public void setButton(Button newBut) {button = newBut;}
-
-    public Button getButton() {return button;}
 }

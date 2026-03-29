@@ -31,10 +31,6 @@ public class Scene3Controller {
         DataAccessLayer.readFlashcards();
         List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
 
-        ScrollPane scrollPane = new ScrollPane();
-        VBox define_flashcards = new VBox();
-        define_flashcards.setSpacing(10);
-
         Label define_flashcards_label = new Label("Define flashcards of deck: " + deck.getTitle());
         define_flashcards_label.setAlignment(Pos.CENTER);
         define_flashcards_label.setMaxWidth(Double.MAX_VALUE);
@@ -111,12 +107,6 @@ public class Scene3Controller {
         cancel_save.getChildren().add(cancel_button);
         cancel_save.getChildren().add(save_button);
 
-        define_flashcards.getChildren().add(define_flashcards_label);
-        define_flashcards.getChildren().add(list_flashcards);
-        define_flashcards.getChildren().add(cancel_save);
-        scrollPane.setContent(define_flashcards);
-        scrollPane.setPadding(new Insets(0,0,10,10));
-
         VBox sidebar = new VBox(20);
         sidebar.setPrefWidth(200);
         sidebar.setPadding(new Insets(20));
@@ -138,10 +128,11 @@ public class Scene3Controller {
                 cancel_save
         );
         HBox root = new HBox();
-        root.getChildren().addAll(sidebar, mainContent);
         ScrollPane scroll = new ScrollPane();
-        scroll.setContent(root);
-        Scene scene = new Scene(scroll, 900, 600);
+        scroll.setContent(mainContent);
+        scroll.setFitToWidth(true);
+        root.getChildren().addAll(sidebar, scroll);
+        Scene scene = new Scene(root, 900, 600);
 
         scene.getStylesheets().add(
                 Scene3Controller.class.getResource("/cs151/application/createDeck.css").toExternalForm()
@@ -155,8 +146,6 @@ public class Scene3Controller {
         Button delete_card_button;
         TextField front_field;
         TextArea back_area;
-        TextField front;
-        TextArea back;
 
         CreateFlashcard() {
             add_card_button = new Button("Add");
@@ -166,21 +155,14 @@ public class Scene3Controller {
             delete_card_button.setMinWidth(50);
 
             front_field = new TextField();
-            front_field.setPrefWidth(400);
+            front_field.setPromptText("Front");
+            front_field.setMaxWidth(Double.MAX_VALUE);
+
             back_area = new TextArea();
-            back_area.setPrefHeight(60);
-            back_area.setPrefWidth(400);
-            back_area.setWrapText(true);
-
-            front = new TextField();
-            front.setPromptText("Front");
-            front.setMaxWidth(Double.MAX_VALUE);
-
-            back = new TextArea();
-            back.setPromptText("Back");
-            back.setPrefRowCount(3);
-            back.setMaxWidth(Double.MAX_VALUE);
-            HBox.setHgrow(back, Priority.ALWAYS);
+            back_area.setPromptText("Back");
+            back_area.setPrefRowCount(3);
+            back_area.setMaxWidth(Double.MAX_VALUE);
+            HBox.setHgrow(back_area, Priority.ALWAYS);
 
             add_card_button = new Button("Add");
             delete_card_button = new Button("Delete");
@@ -198,9 +180,9 @@ public class Scene3Controller {
 
             Label frontLabel = new Label("Front:");
             frontLabel.setMinWidth(50);
-            HBox.setHgrow(front, Priority.ALWAYS);
+            HBox.setHgrow(front_field, Priority.ALWAYS);
 
-            frontRow.getChildren().addAll(frontLabel, front);
+            frontRow.getChildren().addAll(frontLabel, front_field);
 
             // BACK ROW
             HBox backRow = new HBox(15);
@@ -208,9 +190,9 @@ public class Scene3Controller {
 
             Label backLabel = new Label("Back:");
             backLabel.setMinWidth(50);
-            HBox.setHgrow(back, Priority.ALWAYS);
+            HBox.setHgrow(back_area, Priority.ALWAYS);
 
-            backRow.getChildren().addAll(backLabel, back);
+            backRow.getChildren().addAll(backLabel, back_area);
 
             // BUTTON ROW
             HBox buttonRow = new HBox(20);

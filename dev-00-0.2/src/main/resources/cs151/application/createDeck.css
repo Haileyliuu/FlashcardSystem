@@ -140,3 +140,12 @@
     -fx-padding: 30;
     -fx-border-radius: 20;
 }
+
+/* Scroll bar */
+.scroll-bar .thumb{
+    -fx-background-color: #555555;
+}
+
+.scroll-bar {
+    -fx-background-color: #2a2a2a;
+}
