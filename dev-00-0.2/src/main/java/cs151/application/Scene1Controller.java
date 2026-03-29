@@ -18,6 +18,7 @@ public class Scene1Controller {
     public Scene1Controller() {}
 
     public static void scene1UI(Stage stage) {
+        stage.setTitle("Main menu");
         int deck_amount = DataAccessLayer.getDecks().size();
         Label create_deck_text = new Label("Create");
         create_deck_text.getStyleClass().add("header-text");

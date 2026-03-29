@@ -8,10 +8,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setTitle("Main Menu");
-
-        SceneController main_menu = new SceneController();
-        main_menu.switchScene1(stage);
+        SceneController.switchScene1(stage);
     }
 
     public static void main(String[] args) {

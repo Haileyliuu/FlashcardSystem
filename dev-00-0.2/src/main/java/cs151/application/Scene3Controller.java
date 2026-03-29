@@ -26,6 +26,7 @@ public class Scene3Controller {
     public Scene3Controller() {}
 
     public static void scene3UI(Stage stage, DeckBean deck) {
+        stage.setTitle("Define flashcards");
         flashcards.clear();
         list_flashcards.getChildren().clear();
         DataAccessLayer.readFlashcards();

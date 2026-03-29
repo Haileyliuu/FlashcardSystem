@@ -18,6 +18,7 @@ public class Scene4Controller {
     public Scene4Controller() {}
 
     public static void scene4UI(Stage stage, DeckBean deck) {
+        stage.setTitle(deck.getTitle());
         DataAccessLayer.readFlashcards();
         List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
         ScrollPane scroll = new ScrollPane();
