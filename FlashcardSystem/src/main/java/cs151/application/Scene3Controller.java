@@ -8,14 +8,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.StackPane;
 import javafx.geometry.Pos;
 
 public class Scene3Controller {
@@ -30,7 +28,7 @@ public class Scene3Controller {
         flashcards.clear();
         list_flashcards.getChildren().clear();
         DataAccessLayer.readFlashcards();
-        List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
+        List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
 
         Label define_flashcards_label = new Label("Define flashcards of deck: " + deck.getTitle());
         define_flashcards_label.setAlignment(Pos.CENTER);
@@ -91,7 +89,7 @@ public class Scene3Controller {
                 if (!error) {
                     for (CreateFlashcard flashcard : flashcards) {
                         FlashcardBean new_flashcard = new FlashcardBean();
-                        new_flashcard.setDeckName(deck.getTitle());
+                        new_flashcard.setDeckID(deck.getDeckID());
                         new_flashcard.setFront(flashcard.front_field.getText());
                         new_flashcard.setBack(flashcard.back_area.getText());
                         new_flashcard.setStatus("New");

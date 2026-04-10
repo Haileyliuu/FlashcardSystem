@@ -1,7 +1,6 @@
 package cs151.application;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -9,8 +8,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scene4Controller {
@@ -20,7 +17,7 @@ public class Scene4Controller {
     public static void scene4UI(Stage stage, DeckBean deck) {
         stage.setTitle(deck.getTitle());
         DataAccessLayer.readFlashcards();
-        List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
+        List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
         ScrollPane scroll = new ScrollPane();
         scroll.setStyle("-fx-background: #1e1e1e; -fx-background-color: #1e1e1e;");
 

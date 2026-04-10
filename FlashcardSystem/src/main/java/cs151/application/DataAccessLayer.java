@@ -146,12 +146,12 @@ public class DataAccessLayer {
     }
 
     // get flashcards in a deck from ArrayList
-    public static List<FlashcardBean> getFlashcardsByDeck(String deckName) 
+    public static List<FlashcardBean> getFlashcardsByDeck(int deckID) 
     {
         List<FlashcardBean> result = new ArrayList<>();
 
         for (FlashcardBean card : flashcards) {
-            if (card.getDeckName().equals(deckName)) {
+            if (card.getDeckID()== deckID) {
                 result.add(card);
             }
         }
@@ -164,14 +164,14 @@ public class DataAccessLayer {
     {
         try (FileWriter writer = new FileWriter(FLASHCARD_CSV)) {
             for (FlashcardBean card : flashcards) {
-                String deckName = card.getDeckName();
+                int deckID = card.getDeckID();
                 String front = card.getFront().replace("\n", "\\n");
                 String back = card.getBack().replace("\n", "\\n");
                 String status = card.getStatus();
                 String creationDate = card.getCreationDate();
                 String lastReviewed = card.getLastReviewed();
 
-                writer.write(card.getFlashcardID() + "|" + deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
+                writer.write(card.getFlashcardID() + "|" + deckID + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,7 +196,7 @@ public class DataAccessLayer {
                 if (parts.length == 7) {
                     FlashcardBean card = new FlashcardBean();
                     card.setFlashcardID(Integer.parseInt(parts[0]));
-                    card.setDeckName(parts[1]);
+                    card.setDeckID(Integer.parseInt(parts[1]));
                     card.setFront(parts[2].replace("\\n", "\n"));
                     card.setBack(parts[3].replace("\\n", "\n"));
                     card.setStatus(parts[4]);
