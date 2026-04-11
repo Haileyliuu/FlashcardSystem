@@ -1,7 +1,9 @@
 package cs151.application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -9,15 +11,13 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scene4Controller {
 
     public Scene4Controller() {}
 
-    public static void scene4UI(Stage stage, DeckBean deck) {
+    public static void sceneUI(Stage stage, DeckBean deck) {
         stage.setTitle(deck.getTitle());
         DataAccessLayer.readFlashcards();
         List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
@@ -37,7 +37,9 @@ public class Scene4Controller {
         deck_info.getChildren().add(deck_name);
         deck_info.getChildren().add(flashcard_amount);
 
+
         //Table
+        ObservableList<FlashcardBean> data = FXCollections.observableArrayList(flashcards);
         TableView<FlashcardBean> table = new TableView<>();
         TableColumn<FlashcardBean, String> front = new TableColumn<>("Front");
         front.setCellValueFactory(new PropertyValueFactory<>("front"));
@@ -49,6 +51,28 @@ public class Scene4Controller {
         review.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
         TableColumn<FlashcardBean, String> creation = new TableColumn<>("Created");
         creation.setCellValueFactory(new PropertyValueFactory<>("lastReviewed"));
+        TableColumn<FlashcardBean, Void> delete = new TableColumn<>("Action");
+        delete.setCellFactory(col -> new TableCell<FlashcardBean, Void>() {
+            private final Button delete_button = new Button("Delete");
+            {
+                delete_button.setStyle("-fx-background-color: #b71c1c");
+                delete_button.setOnAction(event -> {
+                    FlashcardBean flashcard = getTableView().getItems().get(getTableRow().getIndex());
+                    DataAccessLayer.deleteFlashcard(flashcard.getFlashcardID());
+                    data.remove(flashcard);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                }
+                else {
+                    setGraphic(delete_button);
+                }
+            }
+        });
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setMaxWidth(Double.MAX_VALUE);
         table.setPrefHeight(400);
@@ -58,18 +82,36 @@ public class Scene4Controller {
         table.getColumns().add(status);
         table.getColumns().add(review);
         table.getColumns().add(creation);
-        for (FlashcardBean flashcard : flashcards) {
-            table.getItems().add(flashcard);
-        }
+        table.getColumns().add(delete);
+        table.setItems(data);
         //Table end
 
+        //Search bar
+        TextField search_bar = new TextField();
+        search_bar.setPromptText("Search flashcards");
+        search_bar.setMaxWidth(300);
+        FilteredList<FlashcardBean> filtered = new FilteredList<>(data, p -> true);
+        table.setItems(filtered);
+        search_bar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filter = newValue.toLowerCase();
+
+            filtered.setPredicate(f -> {
+                if (filter.isEmpty()) return true;
+
+                return f.getFront().toLowerCase().contains(filter)
+                        || f.getBack().toLowerCase().contains(filter)
+                        || f.getStatus().toLowerCase().contains(filter)
+                        || f.getCreationDate().toLowerCase().contains(filter)
+                        || f.getLastReviewed().toLowerCase().contains(filter);
+            });
+        });
+        //Search bar end
 
         Button back_button = new Button("Back");
-        back_button.setOnAction(event -> {
-            SceneController.switchScene1(stage);
-        });
+        back_button.setOnAction(event -> SceneController.switchScene1(stage));
         deck_view.getChildren().add(back_button);
         deck_view.getChildren().add(deck_info);
+        deck_view.getChildren().add(search_bar);
         deck_view.getChildren().add(table);
         scroll.setContent(deck_view);
         Scene scene = new Scene(scroll,1300, 600);

@@ -8,14 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.StackPane;
+
 import javafx.geometry.Pos;
 
 public class Scene3Controller {
@@ -25,7 +24,7 @@ public class Scene3Controller {
 
     public Scene3Controller() {}
 
-    public static void scene3UI(Stage stage, DeckBean deck) {
+    public static void sceneUI(Stage stage, DeckBean deck) {
         stage.setTitle("Define flashcards");
         flashcards.clear();
         list_flashcards.getChildren().clear();
@@ -65,11 +64,11 @@ public class Scene3Controller {
             public void handle(ActionEvent actionEvent) {
                 boolean error = false;
                 for (CreateFlashcard flashcard: flashcards) {
-                    String trimmed_name = flashcard.front_field.getText().replaceAll(" ","");
+                    String trimmed_name = flashcard.front_area.getText().replaceAll(" ","");
                     if(trimmed_name.isEmpty()){
-                        flashcard.front_field.clear();
-                        flashcard.front_field.setPromptText("Front text is required");
-                        flashcard.front_field.getStyleClass().add("error");
+                        flashcard.front_area.clear();
+                        flashcard.front_area.setPromptText("Front text is required");
+                        flashcard.front_area.getStyleClass().add("error");
                         error = true;
                     }
                     if (flashcard.back_area.getText().isEmpty()) {
@@ -81,9 +80,9 @@ public class Scene3Controller {
                     for (int i = 0; i < flashcard_list.size(); i++) {
                         String check = flashcard_list.get(i).getFront().replaceAll(" ","");
                         if (trimmed_name.equals(check)) {
-                            flashcard.front_field.clear();
-                            flashcard.front_field.setPromptText("Front text has already been used");
-                            flashcard.front_field.getStyleClass().add("error");
+                            flashcard.front_area.clear();
+                            flashcard.front_area.setPromptText("Front text has already been used");
+                            flashcard.front_area.getStyleClass().add("error");
                             error = true;
                         }
                     }
@@ -92,7 +91,7 @@ public class Scene3Controller {
                     for (CreateFlashcard flashcard : flashcards) {
                         FlashcardBean new_flashcard = new FlashcardBean();
                         new_flashcard.setDeckName(deck.getTitle());
-                        new_flashcard.setFront(flashcard.front_field.getText());
+                        new_flashcard.setFront(flashcard.front_area.getText());
                         new_flashcard.setBack(flashcard.back_area.getText());
                         new_flashcard.setStatus("New");
                         new_flashcard.setCreationDate(LocalDate.now().toString());
@@ -145,7 +144,7 @@ public class Scene3Controller {
     private static class CreateFlashcard {
         Button add_card_button;
         Button delete_card_button;
-        TextField front_field;
+        TextArea front_area;
         TextArea back_area;
 
         CreateFlashcard() {
@@ -155,9 +154,10 @@ public class Scene3Controller {
             delete_card_button = new Button("Del");
             delete_card_button.setMinWidth(50);
 
-            front_field = new TextField();
-            front_field.setPromptText("Front");
-            front_field.setMaxWidth(Double.MAX_VALUE);
+            front_area = new TextArea();
+            front_area.setPromptText("Front");
+            front_area.setPrefRowCount(2);
+            front_area.setMaxWidth(Double.MAX_VALUE);
 
             back_area = new TextArea();
             back_area.setPromptText("Back");
@@ -181,9 +181,9 @@ public class Scene3Controller {
 
             Label frontLabel = new Label("Front:");
             frontLabel.setMinWidth(50);
-            HBox.setHgrow(front_field, Priority.ALWAYS);
+            HBox.setHgrow(front_area, Priority.ALWAYS);
 
-            frontRow.getChildren().addAll(frontLabel, front_field);
+            frontRow.getChildren().addAll(frontLabel, front_area);
 
             // BACK ROW
             HBox backRow = new HBox(15);

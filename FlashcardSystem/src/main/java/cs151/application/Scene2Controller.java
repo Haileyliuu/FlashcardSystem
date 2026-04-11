@@ -18,7 +18,7 @@ public class Scene2Controller {
 
     public Scene2Controller() {}
 
-    public static void scene2UI(Stage stage) {
+    public static void sceneUI(Stage stage) {
         stage.setTitle("Define deck");
         Label define_deck_label = new Label("Define Deck");
         define_deck_label.setFont(Font.font("", 50));

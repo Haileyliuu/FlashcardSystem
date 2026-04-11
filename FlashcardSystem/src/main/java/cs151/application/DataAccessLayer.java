@@ -14,6 +14,7 @@ public class DataAccessLayer {
     private static final String FLASHCARD_CSV = "data/Flashcard.csv";
     private static List<DeckBean> decks = new ArrayList<>();
     private static List<FlashcardBean> flashcards = new ArrayList<>();
+    private static int nextFlashcardId = 1;
 
     public DataAccessLayer() {}
 
@@ -128,21 +129,39 @@ public class DataAccessLayer {
     // add flashcard to ArrayList
     public static void insertFlashcard(FlashcardBean f) 
     {
-        if (f.getFlashcardID() == 0) {
-            f.setFlashcardID(getNextFlashcardId());
-        }
+        f.setFlashcardID(nextFlashcardId);
+        nextFlashcardId++;
         flashcards.add(f);
     }
 
-    // delete flashcard from ArrayList
+    // delete flashcard from ArrayList and Database
     public static void deleteFlashcard(int id) 
     {
         for (int i = 0; i < flashcards.size(); i++) {
             if (flashcards.get(i).getFlashcardID() == id) {
                 flashcards.remove(i);
-                return;
+            }
         }
-    }
+        String tempPath = "data/temp.csv";
+        File originalFile = new File(FLASHCARD_CSV);
+        File tempFile = new File(tempPath);
+        try (FileWriter writer = new FileWriter(tempPath)) {
+            for (FlashcardBean card : flashcards) {
+                String deckName = card.getDeckName();
+                String front = card.getFront().replace("\n", "\\n");
+                String back = card.getBack().replace("\n", "\\n");
+                String status = card.getStatus();
+                String creationDate = card.getCreationDate();
+                String lastReviewed = card.getLastReviewed();
+
+                writer.write(card.getFlashcardID() + "|" + deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
+            }
+            writer.write("NextID|" + nextFlashcardId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        originalFile.delete();
+        tempFile.renameTo(originalFile);
     }
 
     // get flashcards in a deck from ArrayList
@@ -173,6 +192,7 @@ public class DataAccessLayer {
 
                 writer.write(card.getFlashcardID() + "|" + deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
             }
+            writer.write("NextID|" + nextFlashcardId);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,20 +225,13 @@ public class DataAccessLayer {
 
                     flashcards.add(card);
                 }
+                else {
+                    nextFlashcardId = Integer.parseInt(parts[1]);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int getNextFlashcardId() {
-        int maxId = 0;
-        for (FlashcardBean card : flashcards) {
-            if (card.getFlashcardID() > maxId) {
-                maxId = card.getFlashcardID();
-            }
-        }
-        return maxId + 1;
     }
 
 }
