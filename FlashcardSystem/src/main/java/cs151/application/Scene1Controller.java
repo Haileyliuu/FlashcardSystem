@@ -14,6 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 public class Scene1Controller {
 
@@ -86,7 +90,7 @@ public class Scene1Controller {
         description_column.setCellValueFactory(new PropertyValueFactory<>("description"));
         TableColumn<DeckBean, Void> edit_deck_column = new TableColumn<>("Action");
         edit_deck_column.setCellFactory(col -> new TableCell<DeckBean, Void>() {
-            private final Button edit_button = new Button("Edit");
+            private final Button edit_button = new Button("Add");
             {
                 edit_button.setOnAction(event -> {
                     DeckBean deck = getTableView().getItems().get(getTableRow().getIndex());
@@ -106,20 +110,53 @@ public class Scene1Controller {
         });
         title_column.setPrefWidth(150);
         description_column.setPrefWidth(500);
-        edit_deck_column.setPrefWidth(50);
+        edit_deck_column.setMinWidth(90);
         table.getColumns().add(title_column);
         table.getColumns().add(description_column);
         table.getColumns().add(edit_deck_column);
-        for (int i = 0; i < deck_amount; i++) {
-            table.getItems().add(DataAccessLayer.getDecks().get(i));
-        }
+
         deck_listing.getChildren().add(deck_number_text);
         deck_listing.getChildren().add(table);
         //********************************************************************//
 
+        // Create data list
+        ObservableList<DeckBean> deckList = FXCollections.observableArrayList();
+        for (int i = 0; i < deck_amount; i++) {
+            deckList.add(DataAccessLayer.getDecks().get(i));
+        }
+
+        // Wrap in filtered list
+        FilteredList<DeckBean> filteredData = new FilteredList<>(deckList, b -> true);
+
         TextField search = new TextField();
         search.setPromptText("Search...");
         search.setMaxWidth(400);
+
+        // Filter logic
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(deck -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (deck.getTitle() != null &&
+                        deck.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return deck.getDescription() != null &&
+                        deck.getDescription().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        // Wrap in sorted list
+        SortedList<DeckBean> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+
+        // Set table data
+        table.setItems(sortedData);
 
         HBox topBar = new HBox();
         topBar.setSpacing(20);

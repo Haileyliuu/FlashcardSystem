@@ -149,3 +149,99 @@
 .scroll-bar {
     -fx-background-color: #2a2a2a;
 }
+
+.scene4-root {
+    -fx-background-color: #1e1e1e;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.scene4-header {
+    -fx-background-color: #2b2b2b;
+    -fx-background-radius: 20;
+    -fx-padding: 20;
+    -fx-spacing: 12;
+}
+
+.scene4-title {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e5e5e5;
+}
+
+.scene4-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #bdbdbd;
+}
+
+.scene4-toolbar {
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
+}
+
+.scene4-table-card {
+    -fx-background-color: #2b2b2b;
+    -fx-background-radius: 20;
+    -fx-padding: 20;
+}
+
+.back-button {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 10 18 10 18;
+}
+
+.back-button:hover {
+    -fx-background-color: #505050;
+}
+
+.delete-button {
+    -fx-background-color: #8b1e1e;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.delete-button:hover {
+    -fx-background-color: #a32626;
+}
+
+.scene4-search {
+    -fx-pref-width: 320;
+}
+
+.scene4-table {
+    -fx-font-size: 15px;
+}
+
+.scene4-table .column-header-background,
+.scene4-table .column-header {
+    -fx-background-color: #2a2a2a;
+}
+
+.scene4-table .column-header .label {
+    -fx-text-fill: #e5e5e5;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.scene4-table .table-row-cell {
+    -fx-cell-size: 56px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #3a3a3a transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.scene4-table .table-cell {
+    -fx-text-fill: #e5e5e5;
+    -fx-padding: 12 16 12 16;
+    -fx-alignment: top-left;
+}
+
+.scene4-table .table-row-cell:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+.scene4-table .filler {
+    -fx-background-color: #2a2a2a;
+}
