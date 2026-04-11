@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs151.application.controller.Scene1Controller"
+      spacing="20"
+      style="-fx-padding: 20;">
+
+    <children>
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <children>
+                <TextField fx:id="searchField" promptText="Search..." maxWidth="400"/>
+            </children>
+        </HBox>
+
+        <HBox spacing="20">
+            <children>
+                <VBox spacing="40" translateX="10" translateY="10">
+                    <children>
+                        <Label text="Create" styleClass="header-text"/>
+                        <Button fx:id="addDeckBtn"
+                                text="+"
+                                styleClass="add-card"
+                                onAction="#handleAddDeck"/>
+                    </children>
+                </VBox>
+
+                <Line startY="10" endY="500" style="-fx-stroke: white;"/>
+
+                <VBox spacing="20">
+                    <children>
+                        <Label fx:id="deckNumberLabel"
+                               translateX="-10"
+                               translateY="10"
+                               style="-fx-font-size: 50;"/>
+
+                        <TableView fx:id="deckTable" prefWidth="700">
+                            <columns>
+                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="150"/>
+                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="480"/>
+                                <TableColumn fx:id="actionColumn" text="Action" prefWidth="68"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>
