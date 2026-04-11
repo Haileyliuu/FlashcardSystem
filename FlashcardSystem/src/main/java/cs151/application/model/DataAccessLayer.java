@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DataAccessLayer {
     private static final String DECK_CSV = "data/Deck.csv";
     private static final String FLASHCARD_CSV = "data/Flashcard.csv";
@@ -147,14 +146,14 @@ public class DataAccessLayer {
         File tempFile = new File(tempPath);
         try (FileWriter writer = new FileWriter(tempPath)) {
             for (FlashcardBean card : flashcards) {
-                String deckName = card.getDeckName();
+                int deckID = card.getDeckID();
                 String front = card.getFront().replace("\n", "\\n");
                 String back = card.getBack().replace("\n", "\\n");
                 String status = card.getStatus();
                 String creationDate = card.getCreationDate();
                 String lastReviewed = card.getLastReviewed();
 
-                writer.write(card.getFlashcardID() + "|" + deckName + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
+                writer.write(card.getFlashcardID() + "|" + deckID + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
             }
             writer.write("NextID|" + nextFlashcardId);
         } catch (IOException e) {

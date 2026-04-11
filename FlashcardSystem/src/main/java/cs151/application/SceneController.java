@@ -1,6 +1,8 @@
 package cs151.application;
 
 import javafx.stage.Stage;
+import cs151.application.model.DataAccessLayer;
+import cs151.application.model.DeckBean;
 
 public class SceneController {
 

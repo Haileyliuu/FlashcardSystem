@@ -1,5 +1,7 @@
 package cs151.application;
 
+
+import cs151.application.model.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -29,7 +31,7 @@ public class Scene3Controller {
         flashcards.clear();
         list_flashcards.getChildren().clear();
         DataAccessLayer.readFlashcards();
-        List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
+        List<FlashcardBean> flashcard_list = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
 
         Label define_flashcards_label = new Label("Define flashcards of deck: " + deck.getTitle());
         define_flashcards_label.setAlignment(Pos.CENTER);
@@ -90,7 +92,7 @@ public class Scene3Controller {
                 if (!error) {
                     for (CreateFlashcard flashcard : flashcards) {
                         FlashcardBean new_flashcard = new FlashcardBean();
-                        new_flashcard.setDeckName(deck.getTitle());
+                        new_flashcard.setDeckID(deck.getDeckID());
                         new_flashcard.setFront(flashcard.front_area.getText());
                         new_flashcard.setBack(flashcard.back_area.getText());
                         new_flashcard.setStatus("New");

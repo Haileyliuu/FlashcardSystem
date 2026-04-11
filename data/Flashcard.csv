@@ -1,10 +1,10 @@
-1|CS 151|Entity|Something that exist conceptually or physically|New|2026-04-10|2026-04-10
-2|CS 151|Object|Composed of attributes and behaviors|New|2026-04-10|2026-04-10
-3|CS 151|Dependency Injection|Depends on abstraction. not concretion|New|2026-04-10|2026-04-10
-4|CS 154|DFA|Deterministic Finite Automata|New|2026-04-10|2026-04-10
-5|CS 154|TM|Turing Machine|New|2026-04-10|2026-04-10
-6|CS 154|PDA|Pushdown Automata|New|2026-04-10|2026-04-10
-7|CS 146|ArrayList|Fast lookup, slow insertion and deletion|New|2026-04-10|2026-04-10
-8|CS 146|LinkedList|Fast insertion and deletion, slow lookup|New|2026-04-10|2026-04-10
-9|CS 146|HashMap|Fast lookup, insertion, and deletion|New|2026-04-10|2026-04-10
-NextID|10
+1|1|Entity|Something that exists physically or conceptually|New|2026-04-10|2026-04-10
+2|1|Dependency Injection|Depends on abstraction, not concretion|New|2026-04-10|2026-04-10
+3|1|SLDC|Analysis, Planning, Design, Implementation, Testing, Delivery, Maintenance|New|2026-04-10|2026-04-10
+4|2|DFA|Deterministic Finite Automata|New|2026-04-10|2026-04-10
+5|2|PDA|Pushdown Automata|New|2026-04-10|2026-04-10
+6|2|TM|Turing Machine|New|2026-04-10|2026-04-10
+7|3|ArrayList|Fast lookup, slow insertion and deletion|New|2026-04-10|2026-04-10
+8|3|LinkedList|Fast insertion and deletion, slow lookup|New|2026-04-10|2026-04-10
+10|3|HashMap|Fast insertion, deletion, lookup|New|2026-04-10|2026-04-10
+NextID|11

@@ -1,5 +1,7 @@
 package cs151.application;
 
+import cs151.application.model.DataAccessLayer;
+import cs151.application.model.DeckBean;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

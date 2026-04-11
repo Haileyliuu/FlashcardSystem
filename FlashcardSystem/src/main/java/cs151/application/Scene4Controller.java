@@ -1,5 +1,6 @@
 package cs151.application;
 
+import cs151.application.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,7 +21,7 @@ public class Scene4Controller {
     public static void sceneUI(Stage stage, DeckBean deck) {
         stage.setTitle(deck.getTitle());
         DataAccessLayer.readFlashcards();
-        List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getTitle());
+        List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
         ScrollPane scroll = new ScrollPane();
         scroll.setStyle("-fx-background: #1e1e1e; -fx-background-color: #1e1e1e;");
 
