@@ -1,8 +1,8 @@
-package cs151.application;
+package cs151.application.model;
 
 public class FlashcardBean {
     private int flashcardID;
-    private String deckName;
+    private int deckID;
     private String front;
     private String back;
     private String status; // New, Learning, Mastered
@@ -15,8 +15,8 @@ public class FlashcardBean {
         return flashcardID;
     }
 
-    public String getDeckName() {
-        return deckName;
+    public int getDeckID() {
+        return deckID;
     }
 
     public String getFront() {
@@ -44,8 +44,8 @@ public class FlashcardBean {
         flashcardID = id;
     }
 
-    public void setDeckName(String n) {
-        deckName = n;
+    public void setDeckID(int id) {
+        deckID = id;
     }
 
     public void setFront(String f) {

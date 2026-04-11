@@ -1,4 +1,4 @@
-package cs151.application;
+package cs151.application.model;
 
 public class DeckBean {
     private int deckID;
