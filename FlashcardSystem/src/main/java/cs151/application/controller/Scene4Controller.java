@@ -71,9 +71,57 @@ public class Scene4Controller {
         frontColumn.setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getFront())
         );
+        frontColumn.setCellFactory(col -> new TableCell<FlashcardBean, String>() {
+            private final Label label = new Label();
+
+            {
+                label.setWrapText(false);
+                label.setStyle("-fx-text-overrun: ellipsis;");
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                // Always take only the first line
+                String firstLine = item.split("\n")[0];
+
+                label.setText(firstLine);
+                setGraphic(label);
+            }
+        });
         backColumn.setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getBack())
         );
+        backColumn.setCellFactory(col -> new TableCell<FlashcardBean, String>() {
+            private final Label label = new Label();
+
+            {
+                label.setWrapText(false);
+                label.setStyle("-fx-text-overrun: ellipsis;");
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                // Always take only the first line
+                String firstLine = item.split("\n")[0];
+
+                label.setText(firstLine);
+                setGraphic(label);
+            }
+        });
         statusColumn.setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getStatus())
         );

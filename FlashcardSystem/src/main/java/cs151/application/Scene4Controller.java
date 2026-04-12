@@ -100,9 +100,7 @@ public class Scene4Controller {
 
                 return f.getFront().toLowerCase().contains(filter)
                         || f.getBack().toLowerCase().contains(filter)
-                        || f.getStatus().toLowerCase().contains(filter)
-                        || f.getCreationDate().toLowerCase().contains(filter)
-                        || f.getLastReviewed().toLowerCase().contains(filter);
+                        || f.getStatus().toLowerCase().contains(filter);
             });
         });
         //Search bar end
