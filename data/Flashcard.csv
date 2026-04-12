@@ -1,10 +1,4 @@
 1|1|Entity|Something that exists physically or conceptually|New|2026-04-10|2026-04-10
-2|1|Dependency Injection|Depends on abstraction, not concretion|New|2026-04-10|2026-04-10
-3|1|SLDC|Analysis, Planning, Design, Implementation, Testing, Delivery, Maintenance|New|2026-04-10|2026-04-10
 4|2|DFA|Deterministic Finite Automata|New|2026-04-10|2026-04-10
-5|2|PDA|Pushdown Automata|New|2026-04-10|2026-04-10
-6|2|TM|Turing Machine|New|2026-04-10|2026-04-10
 7|3|ArrayList|Fast lookup, slow insertion and deletion|New|2026-04-10|2026-04-10
-8|3|LinkedList|Fast insertion and deletion, slow lookup|New|2026-04-10|2026-04-10
-10|3|HashMap|Fast insertion, deletion, lookup|New|2026-04-10|2026-04-10
 NextID|11

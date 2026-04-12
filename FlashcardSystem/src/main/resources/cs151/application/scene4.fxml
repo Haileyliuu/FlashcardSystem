@@ -6,43 +6,60 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="cs151.application.controller.Scene4Controller"
-            style="-fx-background: #1e1e1e; -fx-background-color: #1e1e1e;">
+            fitToWidth="true">
 
     <content>
-        <VBox fx:id="deckView"
-              spacing="20"
-              style="-fx-background-color: #1e1e1e;">
-            <padding>
-                <Insets top="10" right="0" bottom="0" left="10"/>
-            </padding>
-
+        <VBox fx:id="deckView" styleClass="scene4-root">
             <children>
-                <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
-
-                <HBox spacing="30">
+                <HBox fx:id="toolbar" styleClass="scene4-toolbar">
                     <children>
-                        <Label fx:id="deckNameLabel" style="-fx-font-size: 30;"/>
-                        <Label fx:id="flashcardAmountLabel" style="-fx-font-size: 30;"/>
+                        <Button fx:id="backButton"
+                                text="Back"
+                                styleClass="back-button"
+                                onAction="#handleBack"/>
+
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <TextField fx:id="searchBar"
+                                   promptText="Search flashcards"
+                                   maxWidth="300"
+                                   styleClass="scene4-search"/>
                     </children>
                 </HBox>
 
-                <TableView fx:id="flashcardTable"
-                           prefHeight="400"
-                           prefWidth="1000"
-                           maxWidth="1.7976931348623157E308">
-                    <columns>
-                        <TableColumn fx:id="frontColumn" text="Front"/>
-                        <TableColumn fx:id="backColumn" text="Back"/>
-                        <TableColumn fx:id="statusColumn" text="Status"/>
-                        <TableColumn fx:id="reviewColumn" text="Last Reviewed"/>
-                        <TableColumn fx:id="creationColumn" text="Created"/>
-                    </columns>
-                </TableView>
+                <VBox fx:id="deckInfo" styleClass="scene4-header">
+                    <children>
+                        <Label fx:id="deckNameLabel" styleClass="scene4-title"/>
+                        <Label fx:id="flashcardAmountLabel" styleClass="scene4-subtitle"/>
+                    </children>
+                </VBox>
+
+                <VBox fx:id="tableCard" styleClass="scene4-table-card">
+                    <children>
+                        <TableView fx:id="flashcardTable"
+                                   prefHeight="400"
+                                   prefWidth="1000"
+                                   maxWidth="1.7976931348623157E308"
+                                   styleClass="scene4-table">
+                            <columns>
+                                <TableColumn fx:id="frontColumn" text="Front"/>
+                                <TableColumn fx:id="backColumn" text="Back"/>
+                                <TableColumn fx:id="statusColumn" text="Status"/>
+                                <TableColumn fx:id="reviewColumn" text="Last Reviewed"/>
+                                <TableColumn fx:id="creationColumn" text="Created"/>
+                                <TableColumn fx:id="deleteColumn" text="Action"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
             </children>
         </VBox>
     </content>

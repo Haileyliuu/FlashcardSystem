@@ -1,6 +1,10 @@
 # Name of application: Flashcard System
 
 # Who did what:
+# Version: 0.6
+1. Quoc Nguyen Lac: Implemented search and delete flashcards
+2. Alissa Dao: Styled view flashcards page
+3. Hailey Liu: refactored to MVC design
 
 # Version: 0.5
 1. Quoc Nguyen Lac: Implemented define flashcard and data storing

@@ -3,12 +3,11 @@ package cs151.application.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 public class FlashcardItemController {
 
     @FXML
-    private TextField frontField;
+    private TextArea frontField;
 
     @FXML
     private TextArea backArea;
@@ -45,7 +44,7 @@ public class FlashcardItemController {
         });
     }
 
-    public TextField getFrontField() {
+    public TextArea getFrontField() {
         return frontField;
     }
 

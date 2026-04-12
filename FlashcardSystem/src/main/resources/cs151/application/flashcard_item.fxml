@@ -24,7 +24,10 @@
         <HBox spacing="15" alignment="CENTER_LEFT">
             <children>
                 <Label text="Front:" minWidth="50"/>
-                <TextField fx:id="frontField" promptText="Front" HBox.hgrow="ALWAYS"/>
+                <TextArea fx:id="frontField" 
+                        promptText="Front" 
+                        prefRowCount="3" 
+                        HBox.hgrow="ALWAYS"/>
             </children>
         </HBox>
 
