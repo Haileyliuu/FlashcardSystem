@@ -86,7 +86,7 @@ public class Scene1Controller implements Initializable {
         });
 
         actionColumn.setCellFactory(col -> new TableCell<DeckBean, Void>() {
-            private final Button editButton = new Button("Add");
+            private final Button editButton = new Button("Add Flashcard");
 
             {
                 editButton.setOnAction(event -> {
@@ -95,6 +95,7 @@ public class Scene1Controller implements Initializable {
                     SceneController.switchScene3(stage, deck);
                 });
                 setAlignment(Pos.CENTER);
+                editButton.setStyle("-fx-background-color: green");
             }
 
             @Override

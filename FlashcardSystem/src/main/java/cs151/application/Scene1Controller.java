@@ -90,7 +90,7 @@ public class Scene1Controller {
         description_column.setCellValueFactory(new PropertyValueFactory<>("description"));
         TableColumn<DeckBean, Void> edit_deck_column = new TableColumn<>("Action");
         edit_deck_column.setCellFactory(col -> new TableCell<DeckBean, Void>() {
-            private final Button edit_button = new Button("Add");
+            private final Button edit_button = new Button("Add Flashcard");
             {
                 edit_button.setOnAction(event -> {
                     DeckBean deck = getTableView().getItems().get(getTableRow().getIndex());

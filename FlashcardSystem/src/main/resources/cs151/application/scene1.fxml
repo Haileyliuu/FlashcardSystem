@@ -46,9 +46,9 @@
 
                         <TableView fx:id="deckTable" prefWidth="700">
                             <columns>
-                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="150"/>
+                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="125"/>
                                 <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="458"/>
-                                <TableColumn fx:id="actionColumn" text="Action" minWidth="90"/>
+                                <TableColumn fx:id="actionColumn" text="Action" minWidth="125"/>
                             </columns>
                         </TableView>
                     </children>

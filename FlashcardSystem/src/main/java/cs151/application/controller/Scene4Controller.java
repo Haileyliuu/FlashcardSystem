@@ -168,9 +168,7 @@ public class Scene4Controller {
 
                 return contains(f.getFront(), filter)
                         || contains(f.getBack(), filter)
-                        || contains(f.getStatus(), filter)
-                        || contains(f.getCreationDate(), filter)
-                        || contains(f.getLastReviewed(), filter);
+                        || contains(f.getStatus(), filter);
             });
         });
     }
