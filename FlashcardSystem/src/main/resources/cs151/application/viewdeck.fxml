@@ -12,8 +12,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextArea?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cs151.application.controller.Scene4Controller"
+            fx:controller="cs151.application.controller.ViewDeckScene"
             fitToWidth="true">
 
     <content>
@@ -37,7 +38,28 @@
 
                 <VBox fx:id="deckInfo" styleClass="scene4-header">
                     <children>
-                        <Label fx:id="deckNameLabel" styleClass="scene4-title"/>
+                        <HBox spacing="20">
+                            <children>
+                                <Label fx:id="deckNameLabel" styleClass="scene4-title"/>
+                                <TextArea fx:id="deckNameChange"
+                                          style="-fx-background-color: grey;"
+                                          prefWidth="400"
+                                          prefHeight="20"/>
+                                <HBox HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="saveChanges"
+                                        text="Save changes"
+                                        prefWidth="125"
+                                        prefHeight="40"
+                                        onAction="#handleChange"/>
+                            </children>
+                        </HBox>
+                        <HBox spacing="20">
+                            <Label fx:id="deckDescriptionLabel" styleClass="scene4-subtitle"/>
+                            <TextArea fx:id="deckDescriptionChange"
+                                      style="-fx-background-color: grey;"
+                                      prefWidth="400"
+                                      prefHeight="20"/>
+                        </HBox>
                         <Label fx:id="flashcardAmountLabel" styleClass="scene4-subtitle"/>
                     </children>
                 </VBox>

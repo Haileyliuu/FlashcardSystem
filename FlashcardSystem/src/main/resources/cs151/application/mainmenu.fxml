@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="cs151.application.controller.Scene1Controller"
+      fx:controller="cs151.application.controller.MainMenuScene"
       spacing="20"
       style="-fx-padding: 20;">
 
@@ -20,20 +20,26 @@
                 <TextField fx:id="searchField"
                            promptText="Search..."
                            maxWidth="400"/>
+                <HBox HBox.hgrow="ALWAYS"/>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <children>
+                    <Label text="Create Deck" styleClass="header-text"/>
+                    <Button fx:id="addDeckButton"
+                            text="+"
+                            styleClass="add-card"
+                            onAction="#handleAddDeck"/>
+                </children>
+            </HBox>
             </children>
         </HBox>
 
+
         <HBox spacing="20">
             <children>
-                <VBox spacing="40" translateX="10" translateY="10">
-                    <children>
-                        <Label text="Create" styleClass="header-text"/>
-                        <Button fx:id="addDeckButton"
-                                text="+"
-                                styleClass="add-card"
-                                onAction="#handleAddDeck"/>
-                    </children>
-                </VBox>
+                <Label fx:id="allFlashcards"
+                       text="All Flashcards"
+                       underline="true"
+                       onMouseClicked="#handleAllFlashcard"/>
 
                 <Line startY="10" endY="500" style="-fx-stroke: white;"/>
 
@@ -44,11 +50,11 @@
                                translateY="10"
                                style="-fx-font-size: 50;"/>
 
-                        <TableView fx:id="deckTable" prefWidth="700">
+                        <TableView fx:id="deckTable" prefWidth="800">
                             <columns>
-                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="125"/>
+                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="142"/>
                                 <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="458"/>
-                                <TableColumn fx:id="actionColumn" text="Action" minWidth="125"/>
+                                <TableColumn fx:id="actionColumn" text="Action" minWidth="200"/>
                             </columns>
                         </TableView>
                     </children>

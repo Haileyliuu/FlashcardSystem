@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Scene2Controller implements Initializable {
+public class DefineDeckScene implements Initializable {
 
     @FXML
     private TextField deckNameField;
@@ -27,7 +27,7 @@ public class Scene2Controller implements Initializable {
     @FXML
     private Button saveButton;
 
-    public Scene2Controller() {}
+    public DefineDeckScene() {}
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

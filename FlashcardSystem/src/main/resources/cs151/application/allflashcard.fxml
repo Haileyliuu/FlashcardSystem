@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs151.application.controller.AllFlashcardScene"
+      spacing="10">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Top Bar -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="searchBar" promptText="Search flashcards" maxWidth="300"/>
+    </HBox>
+
+    <!-- Flashcard Count Label -->
+    <Label fx:id="flashcardAmount">
+        <font>
+            <Font size="30"/>
+        </font>
+    </Label>
+
+    <!-- Flashcard Table -->
+    <TableView fx:id="flashcardTable" maxWidth="1000" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="deckColumn"     text="Deck"          prefWidth="100"/>
+            <TableColumn fx:id="frontColumn"    text="Front"         prefWidth="200"/>
+            <TableColumn fx:id="backColumn"     text="Back"          prefWidth="400"/>
+            <TableColumn fx:id="statusColumn"   text="Status"        prefWidth="100"/>
+            <TableColumn fx:id="reviewColumn"   text="Last Reviewed" prefWidth="100"/>
+            <TableColumn fx:id="creationColumn" text="Created"       prefWidth="100"/>
+        </columns>
+    </TableView>
+
+</VBox>

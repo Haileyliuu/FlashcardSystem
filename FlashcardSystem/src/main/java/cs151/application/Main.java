@@ -11,6 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         DataAccessLayer.readDeck();
+        DataAccessLayer.readFlashcards();
         SceneController.switchScene1(stage);
     }
 

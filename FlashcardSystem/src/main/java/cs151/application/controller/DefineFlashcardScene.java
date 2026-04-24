@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scene3Controller {
+public class DefineFlashcardScene {
 
     @FXML
     private Label defineFlashcardsLabel;

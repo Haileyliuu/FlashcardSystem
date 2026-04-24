@@ -44,9 +44,9 @@
 .add-card {
     -fx-background-color: #3a3a3a;
     -fx-background-radius: 20;
-    -fx-pref-width: 200;
-    -fx-pref-height: 120;
-    -fx-font-size: 40px;
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
+    -fx-font-size: 25px;
     -fx-text-fill: #ff8c42;
 }
 
@@ -244,4 +244,19 @@
 
 .scene4-table .filler {
     -fx-background-color: #2a2a2a;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: black;
+    -fx-control-inner-background: black;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: grey;
+    -fx-text-fill: white;
 }

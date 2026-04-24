@@ -13,6 +13,7 @@ public class DataAccessLayer {
     private static final String FLASHCARD_CSV = "data/Flashcard.csv";
     private static List<DeckBean> decks = new ArrayList<>();
     private static List<FlashcardBean> flashcards = new ArrayList<>();
+    private static int nextDeckId = 1;
     private static int nextFlashcardId = 1;
 
     public DataAccessLayer() {}
@@ -28,9 +29,8 @@ public class DataAccessLayer {
     // add deck to ArrayList
     public static void insertDeck(DeckBean d)
     {
-        if (d.getDeckID() == 0) {
-            d.setDeckID(getNextDeckId());
-        }
+        d.setDeckID(nextDeckId);
+        nextDeckId++;
         decks.add(d);
     }
 
@@ -40,7 +40,11 @@ public class DataAccessLayer {
         for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i).getDeckID() == id) {
                 decks.remove(i);
-                return;
+            }
+        }
+        for (int i = 0; i < flashcards.size(); i++) {
+            if (flashcards.get(i).getDeckID() == id) {
+                flashcards.remove(i);
             }
         }
     }
@@ -53,7 +57,10 @@ public class DataAccessLayer {
             folder.mkdir();
         }
 
-        try (FileWriter writer = new FileWriter(DECK_CSV)) {
+        String tempPath = "data/temp.csv";
+        File originalFile = new File(DECK_CSV);
+        File tempFile = new File(tempPath);
+        try (FileWriter writer = new FileWriter(tempPath)) {
             for (DeckBean deck : decks) {
                 String title = deck.getTitle();
                 String description = deck.getDescription();
@@ -72,9 +79,12 @@ public class DataAccessLayer {
 
                 writer.write(deck.getDeckID() + "|" + title + "|" + description + "\n");
             }
+            writer.write("NextID|" + nextDeckId);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        originalFile.delete();
+        tempFile.renameTo(originalFile);
     }
 
     // read from deck.csv and put into ArrayList
@@ -101,20 +111,13 @@ public class DataAccessLayer {
                     deck.setDescription(desc);
                     decks.add(deck);
                 }
+                else {
+                    nextDeckId = Integer.parseInt(parts[1]);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int getNextDeckId() {
-        int maxId = 0;
-        for (DeckBean deck : decks) {
-            if (deck.getDeckID() > maxId) {
-                maxId = deck.getDeckID();
-            }
-        }
-        return maxId + 1;
     }
 
 // -------------------------- Flashcard Methods ----------------------------------------
@@ -141,6 +144,25 @@ public class DataAccessLayer {
                 flashcards.remove(i);
             }
         }
+    }
+
+    // get flashcards in a deck from ArrayList
+    public static List<FlashcardBean> getFlashcardsByDeck(int deckID) 
+    {
+        List<FlashcardBean> result = new ArrayList<>();
+
+        for (FlashcardBean card : flashcards) {
+            if (card.getDeckID()== deckID) {
+                result.add(card);
+            }
+        }
+
+        return result;
+    }
+
+    // write ArrayList to Flashcards.csv
+    public static void writeFlashcards() 
+    {
         String tempPath = "data/temp.csv";
         File originalFile = new File(FLASHCARD_CSV);
         File tempFile = new File(tempPath);
@@ -161,40 +183,6 @@ public class DataAccessLayer {
         }
         originalFile.delete();
         tempFile.renameTo(originalFile);
-    }
-
-    // get flashcards in a deck from ArrayList
-    public static List<FlashcardBean> getFlashcardsByDeck(int deckID) 
-    {
-        List<FlashcardBean> result = new ArrayList<>();
-
-        for (FlashcardBean card : flashcards) {
-            if (card.getDeckID()== deckID) {
-                result.add(card);
-            }
-        }
-
-        return result;
-    }
-
-    // write ArrayList to Flashcards.csv
-    public static void writeFlashcards() 
-    {
-        try (FileWriter writer = new FileWriter(FLASHCARD_CSV)) {
-            for (FlashcardBean card : flashcards) {
-                int deckID = card.getDeckID();
-                String front = card.getFront().replace("\n", "\\n");
-                String back = card.getBack().replace("\n", "\\n");
-                String status = card.getStatus();
-                String creationDate = card.getCreationDate();
-                String lastReviewed = card.getLastReviewed();
-
-                writer.write(card.getFlashcardID() + "|" + deckID + "|" + front + "|" + back + "|" + status + "|" + creationDate + "|" + lastReviewed + "\n");
-            }
-            writer.write("NextID|" + nextFlashcardId);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     // read from Flashcards.csv to ArrayList
