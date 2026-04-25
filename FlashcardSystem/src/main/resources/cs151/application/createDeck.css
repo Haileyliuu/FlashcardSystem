@@ -265,3 +265,36 @@
     -fx-background-color: grey;
     -fx-text-fill: white;
 }
+
+.delete-dialog {
+    -fx-background-color: #1e1e1e;
+}
+
+.delete-dialog:header .header-panel {
+    -fx-background-color: #2a2a2a;
+}
+
+.delete-dialog:header .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.delete-dialog .content.label {
+    -fx-text-fill: #dddddd;
+    -fx-font-size: 15px;
+}
+
+.delete-dialog .button {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+}
+
+.delete-dialog .button:hover {
+    -fx-background-color: #505050;
+}
+
+.delete-dialog .button:default {
+    -fx-background-color: #ff7a1a;
+}

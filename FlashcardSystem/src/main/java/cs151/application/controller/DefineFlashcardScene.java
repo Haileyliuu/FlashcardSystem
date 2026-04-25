@@ -31,6 +31,18 @@ public class DefineFlashcardScene {
     @FXML
     private Button saveButton;
 
+    @FXML
+    private void handleHome() {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        SceneController.switchScene1(stage);
+    }
+
+    @FXML
+    private void handleLibrary() {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        SceneController.switchScene5(stage);
+    }
+
     private DeckBean deck;
     private List<FlashcardBean> existingFlashcards = new ArrayList<>();
     private final List<FlashcardItemController> flashcardControllers = new ArrayList<>();

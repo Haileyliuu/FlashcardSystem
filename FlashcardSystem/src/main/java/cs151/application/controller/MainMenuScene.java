@@ -140,6 +140,11 @@ public class MainMenuScene implements Initializable {
         DeckBean deck = currentDeckSelected;
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("/cs151/application/createDeck.css").toExternalForm()
+        );
+        dialogPane.getStyleClass().add("delete-dialog");
         alert.setTitle("Confirm Deletion");
         alert.setHeaderText("Delete Deck: " + deck.getTitle());
         alert.setContentText("Are you sure you want to delete this deck?\nAll flashcards of this deck will also be deleted.");

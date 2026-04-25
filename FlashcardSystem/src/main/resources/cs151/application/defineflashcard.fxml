@@ -16,9 +16,8 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
             <children>
-                <Label text="Home"/>
-                <Label text="Library"/>
-                <Label text="Folders"/>
+                <Button text="Home" onAction="#handleHome"/>
+                <Button text="Library" onAction="#handleLibrary"/>
             </children>
         </VBox>
 
