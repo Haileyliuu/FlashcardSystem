@@ -21,35 +21,23 @@ import java.util.ResourceBundle;
 
 public class MainMenuScene implements Initializable {
 
-    @FXML
-    private TextField searchField;
+    @FXML private TextField searchField;
+    @FXML private Label deckNumberLabel;
+    @FXML private Button addDeckButton;
+    @FXML private TableView<DeckBean> deckTable;
+    @FXML private TableColumn<DeckBean, String> titleColumn;
+    @FXML private TableColumn<DeckBean, String> descriptionColumn;
+    @FXML private Label allFlashcards;
 
-    @FXML
-    private Label deckNumberLabel;
-
-    @FXML
-    private Button addDeckButton;
-
-    @FXML
-    private TableView<DeckBean> deckTable;
-
-    @FXML
-    private TableColumn<DeckBean, String> titleColumn;
-
-    @FXML
-    private TableColumn<DeckBean, String> descriptionColumn;
-
-    @FXML
-    private TableColumn<DeckBean, Void> actionColumn;
-
-    @FXML
-    private Label allFlashcards;
+    @FXML private HBox bottomActionBar;
+    @FXML private Button addFlashcardButton;
+    @FXML private Button editDeckButton;
+    @FXML private Button deleteDeckButton;
 
     private ObservableList<DeckBean> deckList;
     private FilteredList<DeckBean> filteredData;
     private SortedList<DeckBean> sortedData;
-
-    public MainMenuScene() {}
+    private DeckBean currentDeckSelected;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,6 +45,7 @@ public class MainMenuScene implements Initializable {
 
         deckTable.setRowFactory(tv -> {
             TableRow<DeckBean> row = new TableRow<>();
+
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     DeckBean deck = row.getItem();
@@ -64,15 +53,15 @@ public class MainMenuScene implements Initializable {
                     SceneController.switchScene4(stage, deck);
                 }
             });
+
             row.setOnMouseEntered(e -> {
                 if (!row.isEmpty()) {
-                    row.setStyle("-fx-background-color: grey; -fx-cursor: hand;");
+                    row.setStyle("-fx-background-color: rgb(88, 88, 88); -fx-cursor: hand;");
                 }
             });
 
-            row.setOnMouseExited(e -> {
-                row.setStyle("");
-            });
+            row.setOnMouseExited(e -> row.setStyle(""));
+
             return row;
         });
 
@@ -84,60 +73,15 @@ public class MainMenuScene implements Initializable {
                 new ReadOnlyStringWrapper(cellData.getValue().getDescription())
         );
 
-        actionColumn.setCellFactory(col -> new TableCell<DeckBean, Void>() {
-            private final HBox action = new HBox();
-            private final Button editButton = new Button("Add Flashcard");
-            {
-                editButton.setOnAction(event -> {
-                    DeckBean deck = getTableView().getItems().get(getTableRow().getIndex());
-                    Stage stage = (Stage) getScene().getWindow();
-                    SceneController.switchScene3(stage, deck);
-                });
-                setAlignment(Pos.CENTER);
-                editButton.setStyle("-fx-background-color: green");
-            }
-            private final Button deleteButton = new Button("Delete Deck");
-            {
-                deleteButton.setStyle("-fx-background-color: red");
-                deleteButton.setOnAction(event -> {
-                    DeckBean deck = getTableView().getItems().get(getTableRow().getIndex());
+        bottomActionBar.setVisible(false);
+        bottomActionBar.setManaged(false);
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirm Deletion");
-                    alert.setHeaderText("Delete Deck: " + deck.getTitle());
-                    alert.setContentText("Are you sure you want to delete this deck?\nAll flashcards of this deck will also be deleted.");
+        deckTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            currentDeckSelected = newSelection;
 
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        // Delete from storage
-                        DataAccessLayer.deleteDeck(deck.getDeckID());
-                        for (int i = 0; i < DataAccessLayer.getFlashcards().size(); i++) {
-                            if (DataAccessLayer.getFlashcards().get(i).getDeckID() == deck.getDeckID()) {
-                                DataAccessLayer.deleteFlashcard(DataAccessLayer.getFlashcards().get(i).getFlashcardID());
-                            }
-                        }
-                        DataAccessLayer.writeDeck();
-                        DataAccessLayer.writeFlashcards();
-                        // Remove from table
-                        deckList.remove(deck);
-                    }
-                });
-            }
-            {
-                action.setSpacing(5);
-                action.getChildren().add(editButton);
-                action.getChildren().add(deleteButton);
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                }
-                else {
-                    setGraphic(action);
-                }
-            }
+            boolean hasSelection = newSelection != null;
+            bottomActionBar.setVisible(hasSelection);
+            bottomActionBar.setManaged(hasSelection);
         });
 
         loadDecks();
@@ -163,8 +107,7 @@ public class MainMenuScene implements Initializable {
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (deck.getTitle() != null &&
-                        deck.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                if (deck.getTitle() != null && deck.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
 
@@ -174,7 +117,50 @@ public class MainMenuScene implements Initializable {
         });
     }
 
+    @FXML
+    private void handleAddFlashcard() {
+        if (currentDeckSelected != null) {
+            Stage stage = (Stage) deckTable.getScene().getWindow();
+            SceneController.switchScene3(stage, currentDeckSelected);
+        }
+    }
 
+    @FXML
+    private void handleEditDeck() {
+        if (currentDeckSelected != null) {
+            Stage stage = (Stage) deckTable.getScene().getWindow();
+            SceneController.switchScene4(stage, currentDeckSelected);
+        }
+    }
+
+    @FXML
+    private void handleDeleteDeck() {
+        if (currentDeckSelected == null) return;
+
+        DeckBean deck = currentDeckSelected;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Delete Deck: " + deck.getTitle());
+        alert.setContentText("Are you sure you want to delete this deck?\nAll flashcards of this deck will also be deleted.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            DataAccessLayer.deleteDeck(deck.getDeckID());
+
+            for (int i = DataAccessLayer.getFlashcards().size() - 1; i >= 0; i--) {
+                if (DataAccessLayer.getFlashcards().get(i).getDeckID() == deck.getDeckID()) {
+                    DataAccessLayer.deleteFlashcard(DataAccessLayer.getFlashcards().get(i).getFlashcardID());
+                }
+            }
+
+            DataAccessLayer.writeDeck();
+            DataAccessLayer.writeFlashcards();
+
+            deckList.remove(deck);
+            deckTable.getSelectionModel().clearSelection();
+        }
+    }
 
     @FXML
     private void handleAddDeck() {

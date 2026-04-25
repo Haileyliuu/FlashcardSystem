@@ -39,6 +39,7 @@
                 <Label fx:id="allFlashcards"
                        text="All Flashcards"
                        underline="true"
+                       prefWidth="180"
                        onMouseClicked="#handleAllFlashcard"/>
 
                 <Line startY="10" endY="500" style="-fx-stroke: white;"/>
@@ -50,13 +51,19 @@
                                translateY="10"
                                style="-fx-font-size: 50;"/>
 
-                        <TableView fx:id="deckTable" prefWidth="800">
+                        <TableView fx:id="deckTable" prefWidth="780">
                             <columns>
-                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="142"/>
-                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="458"/>
-                                <TableColumn fx:id="actionColumn" text="Action" minWidth="200"/>
+                                <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
+                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="557"/>
                             </columns>
                         </TableView>
+
+                        <HBox fx:id="bottomActionBar" spacing="10" alignment="CENTER">
+                            <Button fx:id="addFlashcardButton" text="Add Flashcard" onAction="#handleAddFlashcard"/>
+                            <Button fx:id="editDeckButton" text="Edit Deck" onAction="#handleEditDeck"/>
+                            <Button fx:id="deleteDeckButton" text="Delete Deck" onAction="#handleDeleteDeck"/>
+                        </HBox>
+                        
                     </children>
                 </VBox>
             </children>
