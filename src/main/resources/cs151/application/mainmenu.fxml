@@ -59,9 +59,9 @@
                         </TableView>
 
                         <HBox fx:id="bottomActionBar" spacing="10" alignment="CENTER">
-                            <Button fx:id="addFlashcardButton" text="Add Flashcard" onAction="#handleAddFlashcard"/>
+                            <Button fx:id="addFlashcardButton" text="Add Flashcard" style="-fx-background-color: green" onAction="#handleAddFlashcard"/>
                             <Button fx:id="editDeckButton" text="Edit Deck" onAction="#handleEditDeck"/>
-                            <Button fx:id="deleteDeckButton" text="Delete Deck" onAction="#handleDeleteDeck"/>
+                            <Button fx:id="deleteDeckButton" text="Delete Deck" style="-fx-background-color: red" onAction="#handleDeleteDeck"/>
                         </HBox>
                         
                     </children>
