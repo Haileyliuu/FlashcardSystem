@@ -1,6 +1,12 @@
 # Name of application: Flashcard System
 
 # Who did what:
+
+# Version: 0.7
+1. Quoc Nguyen Lac; Implemented edit deck and flashcards
+2. Alissa Dao: Styled Deletion Confirmation Window
+3. Hailey Liu: Restyled Main Menu table
+
 # Version: 0.6
 1. Quoc Nguyen Lac: Implemented search and delete flashcards
 2. Alissa Dao: Styled view flashcards page
@@ -33,6 +39,9 @@
 
 
 # Any other instruction that users need to know:
+1. Click on a deck and action buttons will appear below the table.
+2. Double click and edit button will access the deck
+3. Double click on any cell in flashcard table shall let user edit it.
 
 
 

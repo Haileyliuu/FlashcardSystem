@@ -152,6 +152,7 @@ public class MainMenuScene implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DataAccessLayer.deleteDeck(deck.getDeckID());
+            deckNumberLabel.setText(deckList.size() + " Decks");
 
             for (int i = DataAccessLayer.getFlashcards().size() - 1; i >= 0; i--) {
                 if (DataAccessLayer.getFlashcards().get(i).getDeckID() == deck.getDeckID()) {
