@@ -187,13 +187,6 @@ public class ViewDeckScene {
                     }
                 });
 
-                textArea.setOnKeyPressed(e -> {
-                    switch (e.getCode()) {
-                        case ENTER -> commitEdit(textArea.getText());
-                        case ESCAPE -> cancelEdit();
-                    }
-                });
-
                 label.setOnMouseClicked(e -> {
                     if (e.getClickCount() == 2) {
                         startEdit();

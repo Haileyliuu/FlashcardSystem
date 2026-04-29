@@ -1,6 +1,7 @@
 package cs151.application;
 
 import cs151.application.controller.DefineFlashcardScene;
+import cs151.application.controller.ReviewDeckScene;
 import cs151.application.controller.ViewDeckScene;
 import cs151.application.model.DeckBean;
 import cs151.application.model.FlashcardBean;
@@ -111,6 +112,27 @@ public class SceneController {
             stage.setScene(scene);
             stage.show();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void switchScene6(Stage stage, DeckBean deck) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    SceneController.class.getResource("/cs151/application/reviewdeck.fxml")
+            );
+
+            Scene scene = new Scene(loader.load(), 600, 800);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+            ReviewDeckScene controller = loader.getController();
+            controller.setDeck(deck);
+
+            stage.setTitle("Review " + deck.getTitle());
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }

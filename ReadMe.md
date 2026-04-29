@@ -1,9 +1,11 @@
 # Name of application: Flashcard System
 
 # Who did what:
+#Version 0.8
+1. Quoc Nguyen Lac: Implemented deck reviewing function
 
 # Version: 0.7
-1. Quoc Nguyen Lac; Implemented edit deck and flashcards
+1. Quoc Nguyen Lac: Implemented edit deck and flashcards
 2. Alissa Dao: Styled Deletion Confirmation Window
 3. Hailey Liu: Restyled Main Menu table
 
@@ -40,8 +42,9 @@
 
 # Any other instruction that users need to know:
 1. Click on a deck and action buttons will appear below the table.
-2. Double click and edit button will access the deck
-3. Double click on any cell in flashcard table shall let user edit it.
-
+2. Double click on any cell in flashcard table shall let user edit it.
+3. Double click on a deck will start the reviewing process
+4. While reviewing, double clicking on the front, back text, and status shall let the user edit the flashcard
+5. *Changes to a flashcard will not be saved if the user switch filter
 
 

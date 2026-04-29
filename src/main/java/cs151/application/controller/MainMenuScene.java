@@ -50,7 +50,7 @@ public class MainMenuScene implements Initializable {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     DeckBean deck = row.getItem();
                     Stage stage = (Stage) deckTable.getScene().getWindow();
-                    SceneController.switchScene4(stage, deck);
+                    SceneController.switchScene6(stage, deck);
                 }
             });
 

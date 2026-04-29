@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs151.application.controller.ReviewDeckScene"
+      spacing="10">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <children>
+        <HBox spacing="20">
+            <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
+            <Button fx:id="saveButton" text="Save" onAction="#handleSave"/>
+        </HBox>
+        <VBox styleClass="scene4-header">
+            <children>
+                <Label fx:id="deckName"
+                       styleClass="scene4-title"/>
+                <Label fx:id="deckDescription"
+                       styleClass="scene4-subtitle"/>
+                <HBox spacing="5">
+                    <Label text="Reviewing: "/>
+                    <ComboBox fx:id="filter"/>
+                </HBox>
+                <Label styleClass="scene6-warning"
+                       text="Changing filter shall undo all changes!"/>
+            </children>
+        </VBox>
+        <Label fx:id="flashcardAmount" style="-fx-font-size: 20px"/>
+        <BorderPane fx:id="flashcard" prefWidth="400">
+            <top>
+                <HBox alignment="CENTER" spacing="10">
+                    <padding>
+                        <Insets top="10" bottom="10" left="10" right="10"/>
+                    </padding>
+                    <children>
+                        <Button fx:id="prevButton" text="Back"/>
+                        <Button fx:id="flipButton" text="Flip" onAction="#flipCard"/>
+                        <Button fx:id="nextButton" text="Next"/>
+                    </children>
+                </HBox>
+            </top>
+            <center>
+                <VBox alignment="CENTER">
+                    <children>
+                        <Label fx:id="frontLabel"
+                               prefHeight="400"
+                               wrapText="true"
+                               style="-fx-font-size: 20px"/>
+                        <Label fx:id="backLabel"
+                               prefHeight="400"
+                               wrapText="true"
+                               style="-fx-font-size: 20px"/>
+                        <TextArea fx:id="frontEdit" wrapText="true" styleClass="scene6-text-area" prefHeight="400"/>
+                        <TextArea fx:id="backEdit" wrapText="true" styleClass="scene6-text-area" prefHeight="400"/>
+                    </children>
+                </VBox>
+            </center>
+            <left>
+                <Pane minWidth="100"/>
+            </left>
+            <right>
+                <Pane minWidth="100"/>
+            </right>
+            <bottom>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Label fx:id="status" style="-fx-font-size: 15px"/>
+                        <ComboBox fx:id="statusEdit" styleClass="combo-box-popup"/>
+                        <HBox minWidth="150"/>
+                        <VBox alignment="CENTER_RIGHT">
+                            <children>
+                                <Label fx:id="creation"/>
+                                <Label fx:id="review"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </bottom>
+        </BorderPane>
+        <Label fx:id="emptyFilter" text="There are no Flashcards of this status" styleClass="scene4-title"/>
+    </children>
+</VBox>
