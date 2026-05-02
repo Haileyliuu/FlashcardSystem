@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -31,6 +32,7 @@ public class ReviewDeckScene implements Initializable {
     @FXML private Label backLabel;
     @FXML private TextArea frontEdit;
     @FXML private TextArea backEdit;
+    @FXML private VBox statusWrapper;
     @FXML private Label status;
     @FXML private ComboBox<String> statusEdit;
     @FXML private Label creation;
@@ -146,16 +148,16 @@ public class ReviewDeckScene implements Initializable {
         statusEdit.setOnAction(e -> {
             statusEdit.setVisible(false);
             statusEdit.setManaged(false);
-            status.setVisible(true);
-            status.setManaged(true);
+            statusWrapper.setVisible(true);
+            statusWrapper.setManaged(true);
             status.setText(statusEdit.getValue());
             reviewList.get(index).setStatus(status.getText());
             reviewList.get(index).setLastReviewed(LocalDate.now().toString());
         });
-        status.setOnMouseClicked(e -> {
+        statusWrapper.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                status.setManaged(false);
-                status.setVisible(false);
+                statusWrapper.setManaged(false);
+                statusWrapper.setVisible(false);
                 statusEdit.setVisible(true);
                 statusEdit.setManaged(true);
                 statusEdit.setValue(status.getText());

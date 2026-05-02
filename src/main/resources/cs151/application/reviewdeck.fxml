@@ -71,7 +71,9 @@
             <bottom>
                 <HBox alignment="CENTER">
                     <children>
-                        <Label fx:id="status" style="-fx-font-size: 15px"/>
+                        <VBox fx:id="statusWrapper">
+                            <Label fx:id="status" style="-fx-font-size: 15px"/>
+                        </VBox>
                         <ComboBox fx:id="statusEdit" styleClass="combo-box-popup"/>
                         <HBox minWidth="150"/>
                         <VBox alignment="CENTER_RIGHT">
