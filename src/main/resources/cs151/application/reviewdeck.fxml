@@ -1,93 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="cs151.application.controller.ReviewDeckScene"
-      stylesheets="@createDeck.css"
-      styleClass="scene4-root"
-      spacing="10">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs151.application.controller.ReviewDeckScene"
+            stylesheets="@createDeck.css"
+            styleClass="scene4-root"
+            prefWidth="1000"
+            prefHeight="650">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <top>
+        <VBox spacing="12" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="10" left="20"/>
+            </padding>
 
-    <children>
-        <HBox spacing="20">
-            <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
-            <Button fx:id="saveButton" text="Save" onAction="#handleSave"/>
-        </HBox>
-        <VBox styleClass="scene4-header">
             <children>
-                <Label fx:id="deckName"
-                       styleClass="scene4-title"/>
-                <Label fx:id="deckDescription"
-                       styleClass="scene4-subtitle"/>
-                <HBox spacing="5">
-                    <Label text="Reviewing: "/>
-                    <ComboBox fx:id="filter"/>
-                </HBox>
-                <Label styleClass="scene6-warning"
-                       text="Make sure to save before changing the filter!"/>
-            </children>
-        </VBox>
-        <Label fx:id="flashcardAmount" style="-fx-font-size: 20px"/>
-        <BorderPane fx:id="flashcard" prefWidth="400">
-            <top>
-                <HBox alignment="CENTER" spacing="10">
-                    <padding>
-                        <Insets top="10" bottom="10" left="10" right="10"/>
-                    </padding>
+                <HBox spacing="20" alignment="CENTER_LEFT">
                     <children>
-                        <Button fx:id="prevButton" text="Back"/>
-                        <Button fx:id="flipButton" text="Flip" onAction="#flipCard"/>
-                        <Button fx:id="nextButton" text="Next"/>
+                        <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
+                        <Button fx:id="saveButton" text="Save" onAction="#handleSave"/>
                     </children>
                 </HBox>
-            </top>
-            <center>
-                <VBox alignment="CENTER">
+
+                <VBox styleClass="scene4-header" spacing="8">
                     <children>
-                        <Label fx:id="frontLabel"
-                               prefHeight="400"
-                               wrapText="true"
-                               style="-fx-font-size: 20px"/>
-                        <Label fx:id="backLabel"
-                               prefHeight="400"
-                               wrapText="true"
-                               style="-fx-font-size: 20px"/>
-                        <TextArea fx:id="frontEdit" wrapText="true" styleClass="scene6-text-area" prefHeight="400"/>
-                        <TextArea fx:id="backEdit" wrapText="true" styleClass="scene6-text-area" prefHeight="400"/>
+                        <Label fx:id="deckName" styleClass="scene4-title"/>
+                        <Label fx:id="deckDescription" styleClass="scene4-subtitle"/>
+
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <children>
+                                <Label text="Reviewing:"/>
+                                <ComboBox fx:id="filter"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="flashcardAmount" style="-fx-font-size: 20px"/>
+                            </children>
+                        </HBox>
+
+                        <Label styleClass="scene6-warning"
+                               text="Make sure to save before changing the filter!"/>
                     </children>
                 </VBox>
-            </center>
-            <left>
-                <Pane minWidth="100"/>
-            </left>
-            <right>
-                <Pane minWidth="100"/>
-            </right>
-            <bottom>
-                <HBox alignment="CENTER">
-                    <children>
-                        <VBox fx:id="statusWrapper">
-                            <Label fx:id="status" style="-fx-font-size: 15px"/>
-                        </VBox>
-                        <ComboBox fx:id="statusEdit" styleClass="combo-box-popup"/>
-                        <HBox minWidth="150"/>
-                        <VBox alignment="CENTER_RIGHT">
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <StackPane BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <children>
+                <BorderPane fx:id="flashcard"
+                            prefWidth="600"
+                            prefHeight="360"
+                            maxWidth="600"
+                            styleClass="flashcard-pane">
+
+                    <top>
+                        <HBox alignment="CENTER" spacing="12">
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
                             <children>
-                                <Label fx:id="creation"/>
-                                <Label fx:id="review"/>
+                                <Button fx:id="prevButton" text="Back"/>
+                                <Button fx:id="flipButton" text="Flip" onAction="#flipCard"/>
+                                <Button fx:id="nextButton" text="Next"/>
                             </children>
-                        </VBox>
-                    </children>
-                </HBox>
-            </bottom>
-        </BorderPane>
-        <Label fx:id="emptyFilter" text="There are no Flashcards of this status" styleClass="scene4-title"/>
-    </children>
-</VBox>
+                        </HBox>
+                    </top>
+
+                    <center>
+                        <AnchorPane styleClass="flashcard-center">
+                            <children>
+                                <StackPane AnchorPane.topAnchor="0.0"
+                                        AnchorPane.bottomAnchor="0.0"
+                                        AnchorPane.leftAnchor="0.0"
+                                        AnchorPane.rightAnchor="0.0">
+                                    <padding>
+                                        <Insets top="40" right="30" bottom="20" left="30"/>
+                                    </padding>
+                                    <children>
+                                        <Label fx:id="frontLabel"
+                                            wrapText="true"
+                                            maxWidth="600"
+                                            styleClass="flashcard-text"/>
+
+                                        <Label fx:id="backLabel"
+                                            wrapText="true"
+                                            maxWidth="600"
+                                            styleClass="flashcard-text"/>
+
+                                        <TextArea fx:id="frontEdit"
+                                                wrapText="true"
+                                                prefHeight="180"
+                                                maxWidth="600"
+                                                styleClass="scene6-text-area flashcard-editor"/>
+
+                                        <TextArea fx:id="backEdit"
+                                                wrapText="true"
+                                                prefHeight="180"
+                                                maxWidth="600"
+                                                styleClass="scene6-text-area flashcard-editor"/>
+                                    </children>
+                                </StackPane>
+                                <Button fx:id="editButton"
+                                        text="Edit"
+                                        onAction="#handleEditToggle"
+                                        AnchorPane.topAnchor="10.0"
+                                        AnchorPane.rightAnchor="10.0"
+                                        styleClass="edit-button"/>
+
+                            </children>
+                        </AnchorPane>
+                    </center>
+
+                    <bottom>
+                        <HBox alignment="CENTER_LEFT" spacing="16">
+                            <padding>
+                                <Insets top="12" right="16" bottom="12" left="16"/>
+                            </padding>
+                            <children>
+                                <VBox fx:id="statusWrapper">
+                                    <children>
+                                        <Label fx:id="status" style="-fx-font-size: 15px"/>
+                                    </children>
+                                </VBox>
+
+                                <ComboBox fx:id="statusEdit" styleClass="combo-box-popup"/>
+
+                                <Pane HBox.hgrow="ALWAYS"/>
+
+                                <VBox alignment="CENTER_RIGHT" spacing="4">
+                                    <children>
+                                        <Label fx:id="creation"/>
+                                        <Label fx:id="review"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+
+                <Label fx:id="emptyFilter"
+                       text="There are no Flashcards of this status"
+                       styleClass="scene4-title"/>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

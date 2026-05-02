@@ -28,6 +28,7 @@ public class ReviewDeckScene implements Initializable {
     @FXML private Label deckDescription;
     @FXML private ComboBox<String> filter;
     @FXML private Label flashcardAmount;
+    @FXML private Button editButton;
     @FXML private Label frontLabel;
     @FXML private Label backLabel;
     @FXML private TextArea frontEdit;
@@ -54,7 +55,7 @@ public class ReviewDeckScene implements Initializable {
     private int index;
     private List<Boolean> showingFront  = new ArrayList<>();;
     //private boolean showingFront = true;
-    //private boolean editing = false;
+    private boolean editing = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -113,6 +114,9 @@ public class ReviewDeckScene implements Initializable {
                 frontEdit.setVisible(false);
                 frontLabel.setVisible(true);
                 frontLabel.setManaged(true);
+
+                editing = false;
+                editButton.setText("Edit");
             }
         });
         frontLabel.setOnMouseClicked(e -> {
@@ -121,6 +125,9 @@ public class ReviewDeckScene implements Initializable {
                 frontLabel.setVisible(false);
                 frontEdit.setManaged(true);
                 frontEdit.setVisible(true);
+
+                editing = true;
+                editButton.setText("Done");
             }
         });
         backEdit.setOnMouseClicked(e -> {
@@ -135,6 +142,9 @@ public class ReviewDeckScene implements Initializable {
                 backEdit.setManaged(false);
                 backLabel.setVisible(true);
                 backLabel.setManaged(true);
+
+                editing = false;
+                editButton.setText("Edit");
             }
         });
         backLabel.setOnMouseClicked(e -> {
@@ -143,6 +153,9 @@ public class ReviewDeckScene implements Initializable {
                 backLabel.setVisible(false);
                 backEdit.setManaged(true);
                 backEdit.setVisible(true);
+
+                editing = true;
+                editButton.setText("Done");
             }
         });
         statusEdit.getItems().addAll("New", "Learning", "Mastered");
@@ -223,10 +236,7 @@ public class ReviewDeckScene implements Initializable {
             creation.setText("Created: " + reviewList.get(index).getCreationDate());
             review.setText("Last reviewed: " + reviewList.get(index).getLastReviewed());
 
-            frontEdit.setVisible(false);
-            frontEdit.setManaged(false);
-            backEdit.setVisible(false);
-            backEdit.setManaged(false);
+            stopEditing();
 
             if (showingFront.get(index)) {
                 frontLabel.setVisible(true);
@@ -307,6 +317,8 @@ public class ReviewDeckScene implements Initializable {
     private void flipCard() {
         if (reviewList == null || reviewList.isEmpty()) return;
         if (showingFront == null || showingFront.isEmpty()) return;
+        
+        stopEditing();
 
         if (showingFront.get(index)) {
             frontEdit.setVisible(false);
@@ -317,6 +329,8 @@ public class ReviewDeckScene implements Initializable {
             frontLabel.setManaged(false);
             backLabel.setVisible(true);
             backLabel.setManaged(true);
+            reviewList.get(index).setLastReviewed(LocalDate.now().toString());
+            review.setText("Last reviewed: " + LocalDate.now());
             showingFront.set(index, false);
         }
         else {
@@ -350,5 +364,64 @@ public class ReviewDeckScene implements Initializable {
         DataAccessLayer.writeFlashcards();
         // Stage stage = (Stage) saveButton.getScene().getWindow();
         // SceneController.switchScene1(stage);
+    }
+
+    @FXML
+    private void handleEditToggle() {
+        if (reviewList == null || reviewList.isEmpty()) return;
+
+        if (!editing) {
+            editing = true;
+            editButton.setText("Done");
+
+            if (showingFront.get(index)) {
+                frontEdit.setText(frontLabel.getText());
+                frontLabel.setVisible(false);
+                frontLabel.setManaged(false);
+                frontEdit.setVisible(true);
+                frontEdit.setManaged(true);
+            } else {
+                backEdit.setText(backLabel.getText());
+                backLabel.setVisible(false);
+                backLabel.setManaged(false);
+                backEdit.setVisible(true);
+                backEdit.setManaged(true);
+            }
+        } else {
+            editing = false;
+            editButton.setText("Edit");
+
+            if (showingFront.get(index)) {
+                frontLabel.setText(frontEdit.getText());
+                reviewList.get(index).setFront(frontEdit.getText());
+                reviewList.get(index).setLastReviewed(LocalDate.now().toString());
+                review.setText("Last reviewed: " + LocalDate.now());
+
+                frontEdit.setVisible(false);
+                frontEdit.setManaged(false);
+                frontLabel.setVisible(true);
+                frontLabel.setManaged(true);
+            } else {
+                backLabel.setText(backEdit.getText());
+                reviewList.get(index).setBack(backEdit.getText());
+                reviewList.get(index).setLastReviewed(LocalDate.now().toString());
+                review.setText("Last reviewed: " + LocalDate.now());
+
+                backEdit.setVisible(false);
+                backEdit.setManaged(false);
+                backLabel.setVisible(true);
+                backLabel.setManaged(true);
+            }
+        }
+    }
+
+    private void stopEditing() {
+        editing = false;
+        editButton.setText("Edit");
+
+        frontEdit.setVisible(false);
+        frontEdit.setManaged(false);
+        backEdit.setVisible(false);
+        backEdit.setManaged(false);
     }
 }

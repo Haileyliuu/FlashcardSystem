@@ -1,0 +1,11 @@
+2|1|Linked Lists|Slow lookup, fast insertion and deletion|New|2026-04-25|2026-04-28
+3|2|SRP|Single Responsibilty Principle|New|2026-04-25|2026-04-25
+4|2|OCP|Open Closed Principle|New|2026-04-25|2026-04-25
+5|3|TM|Turing Machine|New|2026-04-25|2026-04-25
+6|1|ArrayList|Fast lookup, slow insertion and deletion|Mastered|2026-04-25|2026-04-28
+7|2|toString Method|creating a descriptive string to represent the object’s state\n|New|2026-05-01|2026-05-01
+8|2|What is the meaning of x == y in Java?|It checks whether x and y are references to the same object\nWe call this kind of checking as “identity test”|New|2026-05-01|2026-05-01
+9|2|Reference variable copy|Objects share reference|New|2026-05-01|2026-05-01
+10|2|Shallow copy|If X and Y are objects, and Y is a shallow copy of X, then:\n- All primitive attributes of X are copied into Y\n- Both X and Y share the non-primitive instance variables\n- If an immutable object changes, a new object will be created\n- If a mutable object changes, it remains shared\n|New|2026-05-01|2026-05-01
+11|2|deep copy| If X and Y are objects, and Y is a deep copy of X, then:\n- All attributes are copied into Y\n|New|2026-05-01|2026-05-01
+NextID|12

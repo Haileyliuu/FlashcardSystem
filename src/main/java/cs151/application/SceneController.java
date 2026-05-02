@@ -119,13 +119,13 @@ public class SceneController {
         }
     }
 
-    public static void switchScene6(Stage stage, DeckBean deck) {
+    public static void switchSceneReviewDeck(Stage stage, DeckBean deck) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     SceneController.class.getResource("/cs151/application/reviewdeck.fxml")
             );
 
-            Scene scene = new Scene(loader.load(), 600, 800);
+            Scene scene = new Scene(loader.load(), 900, 700);
             scene.getStylesheets().add(
                     SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
             );
@@ -146,28 +146,6 @@ public class SceneController {
                             "/cs151/application/review_scene.fxml"
                     )
             );
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void switchSceneReviewDeck(Stage stage, DeckBean deck) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    SceneController.class.getResource(
-                            "/cs151/application/reviewdeck.fxml"
-                    )
-            );
-
-            Parent root = loader.load();
-
-            ReviewDeckScene controller = loader.getController();
-            controller.setDeck(deck);
 
             Scene scene = new Scene(root);
 

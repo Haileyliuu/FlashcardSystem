@@ -311,3 +311,31 @@
     -fx-font-size: 20px;
 }
 
+/* .flashcard-center {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 18, 0.2, 0, 4);
+} */
+
+.flashcard-center {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 18;
+}
+
+.flashcard-text {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.flashcard-editor {
+    -fx-font-size: 18px;
+}
+
+.edit-button {
+    -fx-background-color: #222222;
+}
+
