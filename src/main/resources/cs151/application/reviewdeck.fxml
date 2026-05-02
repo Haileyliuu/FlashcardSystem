@@ -31,7 +31,7 @@
                     <ComboBox fx:id="filter"/>
                 </HBox>
                 <Label styleClass="scene6-warning"
-                       text="Changing filter shall undo all changes!"/>
+                       text="Make sure to save before changing the filter!"/>
             </children>
         </VBox>
         <Label fx:id="flashcardAmount" style="-fx-font-size: 20px"/>

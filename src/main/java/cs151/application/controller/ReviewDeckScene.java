@@ -26,7 +26,7 @@ public class ReviewDeckScene implements Initializable {
 
     @FXML private Label deckName;
     @FXML private Label deckDescription;
-    @FXML private ComboBox filter;
+    @FXML private ComboBox<String> filter;
     @FXML private Label flashcardAmount;
     @FXML private Label frontLabel;
     @FXML private Label backLabel;
@@ -52,8 +52,9 @@ public class ReviewDeckScene implements Initializable {
     private List<FlashcardBean> listMastered = new ArrayList<>();
     private List<FlashcardBean> reviewList;
     private int index;
-    private boolean showingFront = true;
-    private boolean editing = false;
+    private List<Boolean> showingFront  = new ArrayList<>();;
+    //private boolean showingFront = true;
+    //private boolean editing = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -196,6 +197,9 @@ public class ReviewDeckScene implements Initializable {
         deckDescription.setText(deck.getDescription());
         resetList();
         reviewList = list;
+
+        resetShowingFront();
+
         flashcardAmount.setText(reviewList.size() + " Flashcards");
         index = 0;
         if (reviewList.size() <= 1) {
@@ -218,6 +222,23 @@ public class ReviewDeckScene implements Initializable {
             status.setText(reviewList.get(index).getStatus());
             creation.setText("Created: " + reviewList.get(index).getCreationDate());
             review.setText("Last reviewed: " + reviewList.get(index).getLastReviewed());
+
+            frontEdit.setVisible(false);
+            frontEdit.setManaged(false);
+            backEdit.setVisible(false);
+            backEdit.setManaged(false);
+
+            if (showingFront.get(index)) {
+                frontLabel.setVisible(true);
+                frontLabel.setManaged(true);
+                backLabel.setVisible(false);
+                backLabel.setManaged(false);
+            } else {
+                frontLabel.setVisible(false);
+                frontLabel.setManaged(false);
+                backLabel.setVisible(true);
+                backLabel.setManaged(true);
+            }
         }
     }
 
@@ -241,7 +262,7 @@ public class ReviewDeckScene implements Initializable {
         index = 0;
     }
 
-    private void setReviewList(Object newVal) {
+    private void setReviewList(String newVal) {
         if (newVal.equals("All")) {
             reviewList = list;
         }
@@ -254,6 +275,9 @@ public class ReviewDeckScene implements Initializable {
         if (newVal.equals("Mastered")) {
             reviewList = listMastered;
         }
+
+        resetShowingFront();
+
         index = 0;
         checkFilter();
         setupFlashcard();
@@ -281,7 +305,10 @@ public class ReviewDeckScene implements Initializable {
 
     @FXML
     private void flipCard() {
-        if (showingFront) {
+        if (reviewList == null || reviewList.isEmpty()) return;
+        if (showingFront == null || showingFront.isEmpty()) return;
+
+        if (showingFront.get(index)) {
             frontEdit.setVisible(false);
             frontEdit.setManaged(false);
             backEdit.setManaged(false);
@@ -290,7 +317,7 @@ public class ReviewDeckScene implements Initializable {
             frontLabel.setManaged(false);
             backLabel.setVisible(true);
             backLabel.setManaged(true);
-            showingFront = false;
+            showingFront.set(index, false);
         }
         else {
             frontEdit.setVisible(false);
@@ -301,9 +328,16 @@ public class ReviewDeckScene implements Initializable {
             frontLabel.setVisible(true);
             backLabel.setVisible(false);
             backLabel.setManaged(false);
-            showingFront = true;
+            showingFront.set(index, true);
         }
     }
+
+    private void resetShowingFront() {
+    showingFront.clear();
+    for (int i = 0; i < reviewList.size(); i++) {
+        showingFront.add(true);
+    }
+}
 
     @FXML
     private void handleBack() {
@@ -314,7 +348,7 @@ public class ReviewDeckScene implements Initializable {
     @FXML
     private void handleSave() {
         DataAccessLayer.writeFlashcards();
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        // Stage stage = (Stage) saveButton.getScene().getWindow();
+        // SceneController.switchScene1(stage);
     }
 }
