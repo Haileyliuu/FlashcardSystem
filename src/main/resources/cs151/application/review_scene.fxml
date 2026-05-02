@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs151.application.controller.ReviewScene"
+      stylesheets="@createDeck.css"
+      styleClass="scene4-root"
+      spacing="20">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <VBox styleClass="scene4-header">
+        <Label text="Review Decks" styleClass="scene4-title"/>
+
+        <Label text="Search for a deck, then double-click a row to review its flashcards."
+               styleClass="scene4-subtitle"/>
+
+        <TextField fx:id="searchField"
+                   promptText="Search decks..."
+                   styleClass="scene4-search"/>
+    </VBox>
+
+    <VBox styleClass="scene4-table-card"
+          VBox.vgrow="ALWAYS">
+
+        <TableView fx:id="deckTable"
+                   styleClass="scene4-table"
+                   VBox.vgrow="ALWAYS">
+
+            <columns>
+                <TableColumn fx:id="titleColumn"
+                             text="Deck Name"
+                             prefWidth="300"/>
+
+                <TableColumn fx:id="descriptionColumn"
+                             text="Description"
+                             prefWidth="650"/>
+            </columns>
+
+        </TableView>
+    </VBox>
+
+    <HBox>
+        <Button fx:id="backButton"
+                text="Back"
+                onAction="#handleBack"
+                styleClass="back-button"/>
+    </HBox>
+
+</VBox>

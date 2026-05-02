@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataAccessLayer {
-    private static final String DECK_CSV = "src/main/java/cs151/application/model/data/Deck.csv";
-    private static final String FLASHCARD_CSV = "src/main/java/cs151/application/model/data/Flashcard.csv";
+    private static final String DECK_CSV = "data/Deck.csv";
+    private static final String FLASHCARD_CSV = "data/Flashcard.csv";
     private static List<DeckBean> decks = new ArrayList<>();
     private static List<FlashcardBean> flashcards = new ArrayList<>();
     private static int nextDeckId = 1;
@@ -57,7 +57,7 @@ public class DataAccessLayer {
             folder.mkdir();
         }
 
-        String tempPath = "src/main/java/cs151/application/model/data/temp.csv";
+        String tempPath = "data/temp.csv";
         File originalFile = new File(DECK_CSV);
         File tempFile = new File(tempPath);
         try (FileWriter writer = new FileWriter(tempPath)) {
@@ -163,7 +163,11 @@ public class DataAccessLayer {
     // write ArrayList to Flashcards.csv
     public static void writeFlashcards() 
     {
-        String tempPath = "src/main/java/cs151/application/model/data/temp.csv";
+        File folder = new File("data");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        String tempPath = "data/temp.csv";
         File originalFile = new File(FLASHCARD_CSV);
         File tempFile = new File(tempPath);
         try (FileWriter writer = new FileWriter(tempPath)) {

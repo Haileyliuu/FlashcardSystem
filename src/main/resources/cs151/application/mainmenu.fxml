@@ -36,11 +36,15 @@
 
         <HBox spacing="20">
             <children>
-                <Label fx:id="allFlashcards"
-                       text="All Flashcards"
-                       underline="true"
-                       prefWidth="180"
-                       onMouseClicked="#handleAllFlashcard"/>
+                <VBox spacing="12" prefWidth="180">
+                    <Label fx:id="allFlashcards"
+                           text="All Flashcards"
+                           underline="true"
+                           onMouseClicked="#handleAllFlashcard"/>
+
+                    <Button text="Review"
+                            onAction="#handleReview"/>
+                </VBox>
 
                 <Line startY="10" endY="500" style="-fx-stroke: white;"/>
 

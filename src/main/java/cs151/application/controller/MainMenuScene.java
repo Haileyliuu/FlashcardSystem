@@ -179,4 +179,9 @@ public class MainMenuScene implements Initializable {
         Stage stage = (Stage) allFlashcards.getScene().getWindow();
         SceneController.switchScene5(stage);
     }
+    @FXML
+    private void handleReview() {
+        Stage stage = (Stage) deckTable.getScene().getWindow();
+        SceneController.switchSceneReview(stage);
+    }
 }

@@ -8,6 +8,8 @@ import cs151.application.model.FlashcardBean;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
+import java.io.IOException;
 
 public class SceneController {
 
@@ -134,6 +136,45 @@ public class SceneController {
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void switchSceneReview(Stage stage) {
+        try {
+            Parent root = FXMLLoader.load(
+                    SceneController.class.getResource(
+                            "/cs151/application/review_scene.fxml"
+                    )
+            );
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void switchSceneReviewDeck(Stage stage, DeckBean deck) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    SceneController.class.getResource(
+                            "/cs151/application/reviewdeck.fxml"
+                    )
+            );
+
+            Parent root = loader.load();
+
+            ReviewDeckScene controller = loader.getController();
+            controller.setDeck(deck);
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
