@@ -1,5 +1,7 @@
 package cs151.application;
 
+import cs151.application.controller.MainMenuScene;
+import cs151.application.controller.SceneController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,7 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         DataAccessLayer.readDeck();
         DataAccessLayer.readFlashcards();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     public static void main(String[] args) {

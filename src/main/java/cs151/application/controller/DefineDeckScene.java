@@ -1,10 +1,11 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,7 +14,22 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DefineDeckScene implements Initializable {
+public class DefineDeckScene implements Initializable, SceneInterface {
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/definedeck.fxml"));
+            Scene scene = new Scene(loader.load(), 900, 600);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
+            stage.setTitle("Define Deck");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private TextField deckNameField;
@@ -39,7 +55,7 @@ public class DefineDeckScene implements Initializable {
     @FXML
     private void handleCancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML
@@ -74,7 +90,7 @@ public class DefineDeckScene implements Initializable {
             DataAccessLayer.writeDeck();
 
             Stage stage = (Stage) saveButton.getScene().getWindow();
-            SceneController.switchScene1(stage);
+            SceneController.switchScene(stage, new MainMenuScene());
         }
     }
 }

@@ -1,11 +1,12 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
 import cs151.application.model.FlashcardBean;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -20,9 +21,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ReviewDeckScene implements Initializable {
-
+public class ReviewDeckScene implements Initializable, SceneInterface {
     public ReviewDeckScene() {}
+    public ReviewDeckScene(DeckBean deck) {
+        this.deck = deck;
+    }
+
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/reviewdeck.fxml"));
+            Scene scene = new Scene(loader.load(), 900, 700);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            ReviewDeckScene controller = loader.getController();
+            controller.setDeck(deck);
+
+            stage.setScene(scene);
+            stage.setTitle("Review " + deck.getTitle());
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML private Label deckName;
     @FXML private Label deckDescription;
@@ -356,14 +378,14 @@ public class ReviewDeckScene implements Initializable {
     @FXML
     private void handleBack() {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML
     private void handleSave() {
         DataAccessLayer.writeFlashcards();
-        // Stage stage = (Stage) saveButton.getScene().getWindow();
-        // SceneController.switchScene1(stage);
+         Stage stage = (Stage) saveButton.getScene().getWindow();
+         SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML

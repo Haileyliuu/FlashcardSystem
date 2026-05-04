@@ -1,12 +1,12 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
 import cs151.application.model.FlashcardBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -17,7 +17,30 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefineFlashcardScene {
+public class DefineFlashcardScene implements SceneInterface {
+    public DefineFlashcardScene() {}
+    public DefineFlashcardScene(DeckBean deck) {
+        this.deck = deck;
+    }
+
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/defineflashcard.fxml"));
+            Scene scene = new Scene(loader.load(), 900, 600);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            DefineFlashcardScene controller = loader.getController();
+            controller.setDeck(deck);
+
+            stage.setScene(scene);
+            stage.setTitle("Define Flashcards");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private Label defineFlashcardsLabel;
@@ -34,13 +57,13 @@ public class DefineFlashcardScene {
     @FXML
     private void handleHome() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML
     private void handleLibrary() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        SceneController.switchScene5(stage);
+        SceneController.switchScene(stage, new AllFlashcardScene());
     }
 
     private DeckBean deck;
@@ -64,7 +87,7 @@ public class DefineFlashcardScene {
     @FXML
     private void handleCancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML
@@ -131,7 +154,7 @@ public class DefineFlashcardScene {
             DataAccessLayer.writeFlashcards();
 
             Stage stage = (Stage) saveButton.getScene().getWindow();
-            SceneController.switchScene1(stage);
+            SceneController.switchScene(stage, new MainMenuScene());
         }
     }
 

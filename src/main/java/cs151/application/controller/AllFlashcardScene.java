@@ -1,13 +1,14 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.FlashcardBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -16,7 +17,22 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class AllFlashcardScene implements Initializable {
+public class AllFlashcardScene implements Initializable, SceneInterface {
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/allflashcard.fxml"));
+            Scene scene = new Scene(loader.load(), 1200, 600);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
+            stage.setTitle("All Flashcards");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML private Button backButton;
     @FXML private TextField searchBar;
@@ -111,6 +127,6 @@ public class AllFlashcardScene implements Initializable {
     @FXML
     private void handleBack() {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 }

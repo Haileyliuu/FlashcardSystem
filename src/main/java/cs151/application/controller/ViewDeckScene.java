@@ -1,6 +1,5 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
 import cs151.application.model.FlashcardBean;
@@ -9,16 +8,39 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class ViewDeckScene {
+public class ViewDeckScene implements SceneInterface{
+    public ViewDeckScene() {}
+    public ViewDeckScene(DeckBean deck) {
+        this.deck = deck;
+    }
+
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/viewdeck.fxml"));
+            Scene scene = new Scene(loader.load(), 1200, 600);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            ViewDeckScene controller = loader.getController();
+            controller.setDeck(deck);
+
+            stage.setScene(scene);
+            stage.setTitle(deck.getTitle());
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private VBox deckView;
@@ -72,8 +94,6 @@ public class ViewDeckScene {
     private DeckBean deck;
     private ObservableList<FlashcardBean> data;
     private FilteredList<FlashcardBean> filtered;
-
-    public ViewDeckScene() {}
 
     @FXML
     public void initialize() {
@@ -391,7 +411,7 @@ public class ViewDeckScene {
     @FXML
     private void handleBack() {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 
     @FXML

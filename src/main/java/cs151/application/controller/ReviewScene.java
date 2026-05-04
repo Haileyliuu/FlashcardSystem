@@ -1,6 +1,5 @@
 package cs151.application.controller;
 
-import cs151.application.SceneController;
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -8,14 +7,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ReviewScene implements Initializable {
+public class ReviewScene implements Initializable, SceneInterface {
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/review_scene.fxml"));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
+            stage.setTitle("Review");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML private TextField searchField;
     @FXML private TableView<DeckBean> deckTable;
@@ -60,7 +76,7 @@ public class ReviewScene implements Initializable {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     DeckBean selectedDeck = row.getItem();
                     Stage stage = (Stage) deckTable.getScene().getWindow();
-                    SceneController.switchSceneReviewDeck(stage, selectedDeck);
+                    SceneController.switchScene(stage, new ReviewDeckScene(selectedDeck));
                 }
             });
 
@@ -71,6 +87,6 @@ public class ReviewScene implements Initializable {
     @FXML
     private void handleBack() {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneController.switchScene1(stage);
+        SceneController.switchScene(stage, new MainMenuScene());
     }
 }

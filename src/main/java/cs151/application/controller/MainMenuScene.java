@@ -2,15 +2,15 @@ package cs151.application.controller;
 
 import cs151.application.model.DataAccessLayer;
 import cs151.application.model.DeckBean;
-import cs151.application.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -19,7 +19,22 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class MainMenuScene implements Initializable {
+public class MainMenuScene implements Initializable, SceneInterface {
+    public void show(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/mainmenu.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 600);
+            scene.getStylesheets().add(
+                    SceneController.class.getResource("/cs151/application/createDeck.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
+            stage.setTitle("Main Menu");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML private TextField searchField;
     @FXML private Label deckNumberLabel;
@@ -50,7 +65,7 @@ public class MainMenuScene implements Initializable {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     DeckBean deck = row.getItem();
                     Stage stage = (Stage) deckTable.getScene().getWindow();
-                    SceneController.switchSceneReviewDeck(stage, deck);
+                    SceneController.switchScene(stage, new ReviewDeckScene(deck));
                 }
             });
 
@@ -121,7 +136,7 @@ public class MainMenuScene implements Initializable {
     private void handleAddFlashcard() {
         if (currentDeckSelected != null) {
             Stage stage = (Stage) deckTable.getScene().getWindow();
-            SceneController.switchScene3(stage, currentDeckSelected);
+            SceneController.switchScene(stage, new DefineFlashcardScene(currentDeckSelected));
         }
     }
 
@@ -129,7 +144,7 @@ public class MainMenuScene implements Initializable {
     private void handleEditDeck() {
         if (currentDeckSelected != null) {
             Stage stage = (Stage) deckTable.getScene().getWindow();
-            SceneController.switchScene4(stage, currentDeckSelected);
+            SceneController.switchScene(stage, new ViewDeckScene(currentDeckSelected));
         }
     }
 
@@ -171,17 +186,17 @@ public class MainMenuScene implements Initializable {
     @FXML
     private void handleAddDeck() {
         Stage stage = (Stage) addDeckButton.getScene().getWindow();
-        SceneController.switchScene2(stage);
+        SceneController.switchScene(stage, new DefineDeckScene());
     }
 
     @FXML
     private void handleAllFlashcard() {
         Stage stage = (Stage) allFlashcards.getScene().getWindow();
-        SceneController.switchScene5(stage);
+        SceneController.switchScene(stage, new AllFlashcardScene());
     }
     @FXML
     private void handleReview() {
         Stage stage = (Stage) deckTable.getScene().getWindow();
-        SceneController.switchSceneReview(stage);
+        SceneController.switchScene(stage, new ReviewScene());
     }
 }
