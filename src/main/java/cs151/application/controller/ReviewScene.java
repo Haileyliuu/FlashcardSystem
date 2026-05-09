@@ -52,7 +52,7 @@ public class ReviewScene implements Initializable, SceneInterface {
                 new ReadOnlyStringWrapper(cellData.getValue().getDescription())
         );
 
-        deckList = FXCollections.observableArrayList(DataAccessLayer.getDecks());
+        deckList = FXCollections.observableArrayList(DataAccessLayer.getSingleInstance().getDecks());
         filteredDecks = new FilteredList<>(deckList, deck -> true);
         deckTable.setItems(filteredDecks);
 

@@ -50,15 +50,15 @@ public class AllFlashcardScene implements Initializable, SceneInterface {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Build deck ID -> name map
-        for (int i = 0; i < DataAccessLayer.getDecks().size(); i++) {
-            decks.put(DataAccessLayer.getDecks().get(i).getDeckID(),
-                    DataAccessLayer.getDecks().get(i).getTitle());
+        for (int i = 0; i < DataAccessLayer.getSingleInstance().getDecks().size(); i++) {
+            decks.put(DataAccessLayer.getSingleInstance().getDecks().get(i).getDeckID(),
+                    DataAccessLayer.getSingleInstance().getDecks().get(i).getTitle());
         }
 
         setupColumns();
 
         ObservableList<FlashcardBean> flashcardList =
-                FXCollections.observableArrayList(DataAccessLayer.getFlashcards());
+                FXCollections.observableArrayList(DataAccessLayer.getSingleInstance().getFlashcards());
 
         flashcardAmount.setText(flashcardList.size() + " Flashcards");
 

@@ -73,8 +73,8 @@ public class DefineFlashcardScene implements SceneInterface {
     public void setDeck(DeckBean deck) {
         this.deck = deck;
 
-        DataAccessLayer.readFlashcards();
-        existingFlashcards = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
+        DataAccessLayer.getSingleInstance().readFlashcards();
+        existingFlashcards = DataAccessLayer.getSingleInstance().getFlashcardsByDeck(deck.getDeckID());
 
         defineFlashcardsLabel.setText("Define flashcards of deck: " + deck.getTitle());
 
@@ -148,10 +148,10 @@ public class DefineFlashcardScene implements SceneInterface {
                 newFlashcard.setCreationDate(LocalDate.now().toString());
                 newFlashcard.setLastReviewed(LocalDate.now().toString());
 
-                DataAccessLayer.insertFlashcard(newFlashcard);
+                DataAccessLayer.getSingleInstance().insertFlashcard(newFlashcard);
             }
 
-            DataAccessLayer.writeFlashcards();
+            DataAccessLayer.getSingleInstance().writeFlashcards();
 
             Stage stage = (Stage) saveButton.getScene().getWindow();
             SceneController.switchScene(stage, new MainMenuScene());

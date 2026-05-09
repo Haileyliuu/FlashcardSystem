@@ -163,7 +163,7 @@ public class ViewDeckScene implements SceneInterface{
                 FlashcardBean flashcard = getTableView().getItems().get(getIndex());
                 flashcard.setFront(newValue);
                 flashcard.setLastReviewed(LocalDate.now().toString());
-                DataAccessLayer.writeFlashcards();
+                DataAccessLayer.getSingleInstance().writeFlashcards();
                 label.setText(newValue.split("\n")[0]);
                 setGraphic(label);
             }
@@ -237,7 +237,7 @@ public class ViewDeckScene implements SceneInterface{
                 FlashcardBean flashcard = getTableView().getItems().get(getIndex());
                 flashcard.setBack(newValue);
                 flashcard.setLastReviewed(LocalDate.now().toString());
-                DataAccessLayer.writeFlashcards();
+                DataAccessLayer.getSingleInstance().writeFlashcards();
                 label.setText(newValue.split("\n")[0]);
                 setGraphic(label);
             }
@@ -314,7 +314,7 @@ public class ViewDeckScene implements SceneInterface{
                 FlashcardBean flashcard = getTableView().getItems().get(getIndex());
                 flashcard.setStatus(newValue);
                 flashcard.setLastReviewed(LocalDate.now().toString());
-                DataAccessLayer.writeFlashcards();
+                DataAccessLayer.getSingleInstance().writeFlashcards();
                 label.setText(newValue);
                 setGraphic(label);
             }
@@ -351,9 +351,9 @@ public class ViewDeckScene implements SceneInterface{
                 deleteButton.getStyleClass().add("delete-button");
                 deleteButton.setOnAction(event -> {
                     FlashcardBean flashcard = getTableView().getItems().get(getTableRow().getIndex());
-                    DataAccessLayer.deleteFlashcard(flashcard.getFlashcardID());
+                    DataAccessLayer.getSingleInstance().deleteFlashcard(flashcard.getFlashcardID());
                     data.remove(flashcard);
-                    DataAccessLayer.writeFlashcards();
+                    DataAccessLayer.getSingleInstance().writeFlashcards();
                     updateFlashcardCount();
                 });
                 
@@ -388,8 +388,8 @@ public class ViewDeckScene implements SceneInterface{
     public void setDeck(DeckBean deck) {
         this.deck = deck;
 
-        DataAccessLayer.readFlashcards();
-        List<FlashcardBean> flashcards = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
+        DataAccessLayer.getSingleInstance().readFlashcards();
+        List<FlashcardBean> flashcards = DataAccessLayer.getSingleInstance().getFlashcardsByDeck(deck.getDeckID());
 
         deckNameLabel.setText(deck.getTitle());
         deckDescriptionLabel.setText(deck.getDescription());
@@ -424,6 +424,6 @@ public class ViewDeckScene implements SceneInterface{
         }
         deck.setTitle(deckNameLabel.getText());
         deck.setDescription(deckDescriptionLabel.getText());
-        DataAccessLayer.writeDeck();
+        DataAccessLayer.getSingleInstance().writeDeck();
     }
 }

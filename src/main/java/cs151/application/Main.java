@@ -12,8 +12,7 @@ import cs151.application.model.DataAccessLayer;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        DataAccessLayer.readDeck();
-        DataAccessLayer.readFlashcards();
+        DataAccessLayer.getSingleInstance().readDeck();
         SceneController.switchScene(stage, new MainMenuScene());
     }
 

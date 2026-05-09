@@ -84,7 +84,7 @@ public class ReviewDeckScene implements Initializable, SceneInterface {
         filter.getItems().addAll("All", "New", "Learning", "Mastered");
         filter.setValue("All");
         filter.valueProperty().addListener((obs, oldVal, newVal) -> {
-            DataAccessLayer.readFlashcards();
+            DataAccessLayer.getSingleInstance().readFlashcards();
             resetList();
             setReviewList(newVal);
             if (reviewList.size() <= 1) {
@@ -226,7 +226,7 @@ public class ReviewDeckScene implements Initializable, SceneInterface {
     public void setDeck(DeckBean deck) {
         this.deck = deck;
 
-        DataAccessLayer.readFlashcards();
+        DataAccessLayer.getSingleInstance().readFlashcards();
 
         deckName.setText(deck.getTitle());
         deckDescription.setText(deck.getDescription());
@@ -275,7 +275,7 @@ public class ReviewDeckScene implements Initializable, SceneInterface {
     }
 
     private void resetList() {
-        list = DataAccessLayer.getFlashcardsByDeck(deck.getDeckID());
+        list = DataAccessLayer.getSingleInstance().getFlashcardsByDeck(deck.getDeckID());
         listNew.clear();
         listLearning.clear();
         listMastered.clear();
@@ -383,7 +383,7 @@ public class ReviewDeckScene implements Initializable, SceneInterface {
 
     @FXML
     private void handleSave() {
-        DataAccessLayer.writeFlashcards();
+        DataAccessLayer.getSingleInstance().writeFlashcards();
          Stage stage = (Stage) saveButton.getScene().getWindow();
          SceneController.switchScene(stage, new MainMenuScene());
     }

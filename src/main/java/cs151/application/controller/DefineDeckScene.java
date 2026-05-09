@@ -70,8 +70,8 @@ public class DefineDeckScene implements Initializable, SceneInterface {
         }
 
         boolean found = false;
-        for (int i = 0; i < DataAccessLayer.getDecks().size(); i++) {
-            String check = DataAccessLayer.getDecks().get(i).getTitle().replaceAll(" ", "");
+        for (int i = 0; i < DataAccessLayer.getSingleInstance().getDecks().size(); i++) {
+            String check = DataAccessLayer.getSingleInstance().getDecks().get(i).getTitle().replaceAll(" ", "");
             if (trimmedName.equals(check)) {
                 deckNameField.clear();
                 deckNameField.setPromptText("Title has already been used");
@@ -86,8 +86,8 @@ public class DefineDeckScene implements Initializable, SceneInterface {
             newDeck.setTitle(deckNameField.getText());
             newDeck.setDescription(deckDescriptionArea.getText());
 
-            DataAccessLayer.insertDeck(newDeck);
-            DataAccessLayer.writeDeck();
+            DataAccessLayer.getSingleInstance().insertDeck(newDeck);
+            DataAccessLayer.getSingleInstance().writeDeck();
 
             Stage stage = (Stage) saveButton.getScene().getWindow();
             SceneController.switchScene(stage, new MainMenuScene());

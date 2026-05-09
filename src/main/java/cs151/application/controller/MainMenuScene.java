@@ -104,7 +104,7 @@ public class MainMenuScene implements Initializable, SceneInterface {
     }
 
     private void loadDecks() {
-        deckList = FXCollections.observableArrayList(DataAccessLayer.getDecks());
+        deckList = FXCollections.observableArrayList(DataAccessLayer.getSingleInstance().getDecks());
         filteredData = new FilteredList<>(deckList, b -> true);
         sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(deckTable.comparatorProperty());
@@ -166,17 +166,17 @@ public class MainMenuScene implements Initializable, SceneInterface {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            DataAccessLayer.deleteDeck(deck.getDeckID());
+            DataAccessLayer.getSingleInstance().deleteDeck(deck.getDeckID());
             deckNumberLabel.setText(deckList.size() + " Decks");
 
-            for (int i = DataAccessLayer.getFlashcards().size() - 1; i >= 0; i--) {
-                if (DataAccessLayer.getFlashcards().get(i).getDeckID() == deck.getDeckID()) {
-                    DataAccessLayer.deleteFlashcard(DataAccessLayer.getFlashcards().get(i).getFlashcardID());
+            for (int i = DataAccessLayer.getSingleInstance().getFlashcards().size() - 1; i >= 0; i--) {
+                if (DataAccessLayer.getSingleInstance().getFlashcards().get(i).getDeckID() == deck.getDeckID()) {
+                    DataAccessLayer.getSingleInstance().deleteFlashcard(DataAccessLayer.getSingleInstance().getFlashcards().get(i).getFlashcardID());
                 }
             }
 
-            DataAccessLayer.writeDeck();
-            DataAccessLayer.writeFlashcards();
+            DataAccessLayer.getSingleInstance().writeDeck();
+            DataAccessLayer.getSingleInstance().writeFlashcards();
 
             deckList.remove(deck);
             deckTable.getSelectionModel().clearSelection();

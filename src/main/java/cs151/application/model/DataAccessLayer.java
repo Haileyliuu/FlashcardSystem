@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataAccessLayer {
+    private static DataAccessLayer singleInstance;
     private static final String DECK_CSV = "data/Deck.csv";
     private static final String FLASHCARD_CSV = "data/Flashcard.csv";
     private static List<DeckBean> decks = new ArrayList<>();
@@ -16,18 +17,25 @@ public class DataAccessLayer {
     private static int nextDeckId = 1;
     private static int nextFlashcardId = 1;
 
-    public DataAccessLayer() {}
+    private DataAccessLayer() {}
+
+    public static DataAccessLayer getSingleInstance() {
+        if (singleInstance == null) {
+            singleInstance = new DataAccessLayer();
+        }
+        return singleInstance;
+    }
 
 // ----------------- Deck Methods -----------------------------------------------------
 
     // get the ArrayList of DeckBeans
-    public static List<DeckBean> getDecks()
+    public List<DeckBean> getDecks()
     {
         return decks;
     }
 
     // add deck to ArrayList
-    public static void insertDeck(DeckBean d)
+    public void insertDeck(DeckBean d)
     {
         d.setDeckID(nextDeckId);
         nextDeckId++;
@@ -35,7 +43,7 @@ public class DataAccessLayer {
     }
 
     // delete deck from ArrayList
-    public static void deleteDeck(int id)
+    public void deleteDeck(int id)
     {
         for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i).getDeckID() == id) {
@@ -50,7 +58,7 @@ public class DataAccessLayer {
     }
 
     // save ArrayList to deck.csv
-    public static void writeDeck()
+    public void writeDeck()
     {
         File folder = new File("data");
         if (!folder.exists()) {
@@ -88,7 +96,7 @@ public class DataAccessLayer {
     }
 
     // read from deck.csv and put into ArrayList
-    public static void readDeck()
+    public void readDeck()
     {
         decks.clear();
 
@@ -123,13 +131,13 @@ public class DataAccessLayer {
 // -------------------------- Flashcard Methods ----------------------------------------
 
     // get ArrayList of flashcards
-    public static List<FlashcardBean> getFlashcards() 
+    public List<FlashcardBean> getFlashcards()
     {
         return flashcards;
     }
 
     // add flashcard to ArrayList
-    public static void insertFlashcard(FlashcardBean f) 
+    public void insertFlashcard(FlashcardBean f)
     {
         f.setFlashcardID(nextFlashcardId);
         nextFlashcardId++;
@@ -137,7 +145,7 @@ public class DataAccessLayer {
     }
 
     // delete flashcard from ArrayList and Database
-    public static void deleteFlashcard(int id) 
+    public void deleteFlashcard(int id)
     {
         for (int i = 0; i < flashcards.size(); i++) {
             if (flashcards.get(i).getFlashcardID() == id) {
@@ -147,7 +155,7 @@ public class DataAccessLayer {
     }
 
     // get flashcards in a deck from ArrayList
-    public static List<FlashcardBean> getFlashcardsByDeck(int deckID) 
+    public List<FlashcardBean> getFlashcardsByDeck(int deckID)
     {
         List<FlashcardBean> result = new ArrayList<>();
 
@@ -161,7 +169,7 @@ public class DataAccessLayer {
     }
 
     // write ArrayList to Flashcards.csv
-    public static void writeFlashcards() 
+    public void writeFlashcards()
     {
         File folder = new File("data");
         if (!folder.exists()) {
@@ -190,7 +198,7 @@ public class DataAccessLayer {
     }
 
     // read from Flashcards.csv to ArrayList
-    public static void readFlashcards() {
+    public void readFlashcards() {
         flashcards.clear();
 
         File file = new File(FLASHCARD_CSV);
