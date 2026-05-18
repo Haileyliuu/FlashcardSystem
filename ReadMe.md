@@ -1,7 +1,7 @@
 # Name of application: Flashcard System
 
 # Who did what:
-#Version 0.8
+# Version 0.8
 1. Quoc Nguyen Lac: Implemented deck reviewing function
 2. Alissa Dao: Added review button/page, fixed flashcard not saving bug, & styling
 3. Hailey Liu: Added edit button, fixed flipping flashcard, styling
